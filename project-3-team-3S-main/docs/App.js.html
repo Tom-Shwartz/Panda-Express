@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ManagerInterface from './components/ManagerInterface';
+import './App.css';
+import OrderMenu from './components/OrderMenu';
+import StartScreen from './components/StartScreen';
+import EmployeeLogin from './components/EmployeeLogin';
+import CashierInterface from './components/CashierInterface';
+import OrderClass from './Classes/Orders';
+import Entrees from './components/Entrees';
+import Cart from './components/Cart';
+import Sides from './components/Sides';
+import MusicPlayer from './components/Musicplayer';
+import Extras from './components/Extras';
+import { useEffect, useState } from 'react';
+const {Combos} = require("./components/Combos");
+const AudioList = ["Menu1.mp3","Menu2.mp3","Menu3.mp3","Menu4.mp3","Menu5.mp3"];
+
+/**
+ * The main application component that defines
+ * routes, initializes the music player, and sets
+ * up the language state for the application.
+ * @returns {JSX.Element} - The rendered application component.
+*/
+function App() {
+
+    
+    /**
+     * Fetches data from the backend API for debugging purposes.
+     * @returns {Promise&lt;void>}
+     */
+    fetch("http://localhost:8080/api")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error("Error:", error));
+
+    const [CurrentLanguage,SetLanguage] =  useState('en');
+  return (
+    &lt;Router>
+      &lt;MusicPlayer inputAudioList={AudioList}>&lt;/MusicPlayer>
+      &lt;Routes>
+        &lt;Route path="/" element={ &lt;StartScreen CurrentLanguage = {CurrentLanguage} SetLanguage = {SetLanguage}/>} />
+        &lt;Route path = "/Order" element = {&lt;OrderMenu CurrentLanguage = {CurrentLanguage} SetLanguage = {SetLanguage}/>}/>
+        &lt;Route path = "/Loginpin" element = {&lt;EmployeeLogin />}/>
+        &lt;Route path = "/Cashier" element = {&lt;CashierInterface />} />
+        &lt;Route path = "/Manager" element = {&lt;ManagerInterface />} />
+        &lt;Route path = "/Combos" element = {&lt;Combos />}/>
+        &lt;Route path = "/Entrees" element = {&lt;Entrees />} />
+        &lt;Route path = "/Sides" element = {&lt;Sides />} />
+        &lt;Route path = "/Extras" element = {&lt;Extras />} />
+        &lt;Route path = "/Cart" element = {&lt;Cart />} />
+      &lt;/Routes>
+    &lt;/Router>
+  );
+}
+
+export default App;
+
+  </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

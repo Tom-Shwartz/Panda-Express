@@ -1,0 +1,95 @@
+.manage-inv-container {
+    background-color: #d32f2f; 
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 10vh;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .inv-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .list {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+    background-color: #f1faee;
+    color: #333;
+    border-radius: 8px;
+    text-align: left;
+    height: 500px;
+    overflow: scroll;
+  }
+  
+  .list h3 {
+    color: #1d3557;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .list ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .list li {
+    margin: 5px 0;
+  }
+  
+  .pricing-container {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .change-pricing-btn {
+    background-color: #ffffff;
+    color: #d32f2f;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .name-input, .position-dropdown, .wage-input, .pin-display {
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.name-input {
+    grid-column: span 1;
+}
+
+.position-dropdown {
+    width: 100%;
+}
+
+.wage-input {
+    width: 100%;
+}
+
+.pin-display {
+    width: 100%;
+    text-align: center;
+}

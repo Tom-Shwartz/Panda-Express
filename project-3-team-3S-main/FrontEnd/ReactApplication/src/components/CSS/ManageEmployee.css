@@ -1,0 +1,107 @@
+.manage-employee-container {
+    background-color: #d32f2f; 
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.employee-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.employee-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 100px 80px 60px 40px;
+    align-items: center;
+    gap: 10px;
+}
+
+.name-input, .position-dropdown, .wage-input, .pin-display {
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.name-input {
+    grid-column: span 1;
+}
+
+.position-dropdown {
+    width: 100%;
+}
+
+.wage-input {
+    width: 100%;
+}
+
+.pin-display {
+    width: 100%;
+    text-align: center;
+}
+
+.id-display {
+    width: 50px;
+    text-align: center;
+}
+
+.remove-btn, .refresh-btn, .add-btn {
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-btn:hover, .refresh-btn:hover, .add-btn:hover {
+    color: #ffcccb;
+}
+
+.add-btn {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.save-btn {
+    background-color: #ffffff;
+    color: #d32f2f;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.save-btn:hover {
+    background-color: #ffcccb;
+}
+
+.popup-content-manager-empl {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .close-btn-empl {
+    margin-top: 10px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }

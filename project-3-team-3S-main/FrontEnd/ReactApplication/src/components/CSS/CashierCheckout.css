@@ -1,0 +1,59 @@
+
+.Checkout .Total {
+    border: 1px,1px,2px;
+    font-weight: 700;
+}
+.Checkout .TotalBar{
+    background-color: black;
+    position: fixed;
+    top:3vh;
+    width: 20vw;
+}
+
+.CheckoutList{
+    margin-top: 10vh;
+}
+
+.Checkout {
+    margin-left: 5%;
+}
+
+.ClearBtn{
+    background-color: red;
+    margin-top: 25px;
+    width: 5vw;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    padding: 15px;
+    font-weight: 1000;
+    cursor: pointer;  
+    margin-right: 10%;
+}
+.ClearBtn:hover{
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+}
+.CheckoutBtn{
+    background-color: red;
+    margin-top: 25px;
+    justify-content: center;
+    align-items: center;
+    width: 6vw;
+    height: 80px;
+    padding: 15px;
+    font-weight: 1000;
+    cursor: pointer;  
+}
+.CheckoutBtn:hover{
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+}
+.DeleteButton{
+    background-color: red;
+    color:white;
+    margin-left: 4.5vw;
+    cursor: pointer;
+}
+
+.DeleteButton:hover{
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+}

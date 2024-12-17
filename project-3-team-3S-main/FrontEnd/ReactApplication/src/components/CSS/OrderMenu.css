@@ -1,0 +1,125 @@
+.App {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  width: 15%;
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.9) 1.95px 1.95px 2.6px;
+}
+
+.sidebar button {
+  margin: 10px 0;
+  padding: 15px;
+  background-color: #fa2020;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  font-weight: bold; 
+}
+
+.sidebar button:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: row;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.shopping-cart button{
+  position: fixed;
+  bottom: 2vw;
+  left: 2vw;
+  font-size: 14px;
+  display: grid;
+  color: white;
+  background-color: #fa2020;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 900;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+
+.shopping-cart button:active{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  background-color: #c41212;
+}
+
+.shopping-cart button:hover{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.shopping-cart button h5{
+  position: absolute;
+  top: -35px;
+  right: -15px; 
+  background-color: black; 
+  color: white; 
+  font-size: 12px; 
+  padding: 5px;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Accessibility button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 14px;
+  color: white;
+  background-color: #fa2020;
+  padding: 10px;
+  display: flex;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 900;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.Accessibility button:hover{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+ 
+}
+
+.Accessibility button:active{
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  background-color: #e20e0e;
+}
+
+
+
+.accessibility-button-menu{
+  margin: 10px 0;
+  padding: 15px;
+  background-color: #fa2020;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+  font-weight: bold; 
+}
+
+.accessibility-button-menu:hover{
+  transform: scale(1.3);
+}

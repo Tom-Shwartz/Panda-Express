@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/CashierCheckout.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/CashierCheckout.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import orderItemList from "./OrderItemlist";
+import "./CSS/CashierCheckout.css"
+
+var RemoveSoundCue = new Audio('Flick_Switch_04.WAV');
+var ClearSoundCue = new Audio('ClearSound.mp3');
+ClearSoundCue.volume = 0.3;
+
+/**
+ * Used to generate the checkout tab and handle the logic related to total cost of orders and sending them to the payment terminal
+ * @component
+ * @example
+ * &lt;CashierCheckout setOrders = {setOrders} OrderList= {orders} SetPaymentStatus = {SetPaymentStatus} SetTotal= {setTotal} setInitalTotal ={setInitalTotal}/>
+ * @param {Array} OrderList - list of orders in the cart that have been selected
+ * @param {Function} setorders - function that updates order lists 
+ * @param {Function} SetPaymentStatus - function that updates the condition for the payment terminal popup
+ * @param {Function} SetTotal - updates the Total for the current order
+ * @param {Function} setInitalTotal - updates the total before deducting payment 
+ * @param
+ * @returns {JSX.Element} - Returns the jsx for a cashier checkout tab with all features
+ */
+function CashierCheckout({OrderList , setOrders, SetPaymentStatus, SetTotal,setInitalTotal }){
+
+
+    function GetSubTotal() {
+            let total = 0;
+            for(let i = 0; i &lt; OrderList.length; i++){
+                total += OrderList[i].Price;
+            }
+            return(parseFloat(total.toFixed(2)));
+        }
+    
+    
+    function deleteButton(item){
+        RemoveSoundCue.currentTime = 0;
+        RemoveSoundCue.play();
+        const orderarray = OrderList.filter(OrderList => OrderList.id != item.id);
+        setOrders(orderarray);
+    }
+
+    function clearItems(setOrders_){
+        ClearSoundCue.currentTime = 0;
+        ClearSoundCue.play();
+        const empty = [];
+        setOrders_(empty);
+    }
+
+    function Checkout() {
+        SetPaymentStatus(true); 
+            setInitalTotal((GetSubTotal() + GetSubTotal() * 0.0825));
+            SetTotal((GetSubTotal() + GetSubTotal() * 0.0825));
+        
+    }
+
+    // List out each order item
+    const orderlist = OrderList.map(item => &lt;li key={item.id}>
+        &lt;div className="OrderItem"> 
+            &lt;span className="listItem">{item.Type}
+         
+            &lt;button className="DeleteButton" onClick={() => deleteButton(item)}> X &lt;/button>
+            &lt;/span>
+            &lt;br>&lt;/br>
+            ${item.Price}
+            {orderItemList(item,"en","cashier")}
+            
+        &lt;/div>
+    &lt;/li>);
+
+    
+
+    return(
+
+        &lt;div className="Checkout">
+            &lt;div className="TotalBar">
+                &lt;div className="SubTotal"> SubTotal: ${GetSubTotal()} &lt;/div>
+                &lt;div className="TaxTotal"> Tax: ${(GetSubTotal()*0.0825).toFixed(2)}&lt;/div>
+                &lt;div className="Total"> Total: ${(GetSubTotal() + GetSubTotal() * 0.0825).toFixed(2)} &lt;/div>
+                &lt;div className="CheckoutButtons">
+                    &lt;button className="ClearBtn" onClick={() => {clearItems(setOrders); SetPaymentStatus(false)}}> Clear &lt;/button>
+                    &lt;button className = "CheckoutBtn"  onClick={ () => Checkout()}> Checkout &lt;/button>
+                &lt;/div>
+             
+            &lt;/div>
+                
+            &lt;div className = 'CheckoutList'> {orderlist} &lt;/div>
+
+        &lt;/div>
+    )
+
+
+
+}
+
+export default CashierCheckout</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

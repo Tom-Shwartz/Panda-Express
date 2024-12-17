@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/PaymentTerminal.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/PaymentTerminal.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from "react";
+import './CSS/PaymentTerminal.css'
+import PostgresFetcher from "../Classes/PosgresFetcher";
+
+const DB = new PostgresFetcher();
+var CheckoutCue = new Audio('Special_Powerup_01.WAV');
+/**
+ * Used to generate the content for the payment terminal that will be displayed by a popup
+ * @component
+ * @example
+ * &lt;PaymentTerminal InitalTotal = {InitalTotal} setTotal={setTotal} Total={OrderTotal} SetPopupStatus = {SetPaymentStatus} OrderList ={orders}  setOrders = {setOrders}/>
+ * 
+ * @param {number} InitalTotal - A float for the inital total before updating values 
+ * @param {number} Total - A float for current Total value
+ * @param {Function} SetTotal  - updates the current total value 
+ * @param {Array} OrderList - list of orders to be checked out
+ * @param {Function} setOrders - updates the OrderList
+ * @param {Function} SetPopupStatus - updates the boolean related to displaying the popup for Payment Terminal
+ * @returns {JSX.Element} - Returns the jsx for the Payment terminal
+ */
+function PaymentTerminal({InitalTotal,Total,setTotal,OrderList,setOrders,SetPopupStatus}) {
+  
+       const [PaymentAmount,SetPaymentAmount] = useState("")
+       const [Change,setChange] = useState(0.00)
+        function AddtoPayment(number) {
+           return SetPaymentAmount(PaymentAmount + number);
+           
+        }
+
+        function Checkout(setOrders_){
+            if(Total == 0 || Total &lt; 0.01){
+                CheckoutCue.currentTime = 0;
+                CheckoutCue.play();
+                console.log(InitalTotal);
+                DB.SendOrder(OrderList,InitalTotal);
+                setOrders([]); 
+                SetPopupStatus(false);
+            }
+            else{
+              alert("There is still a balance remaining");  
+            }
+
+
+
+        }
+
+        function deductfromTotal(CurrentAmount) {
+            //error checking just in case unexpected behavior occurs
+            try {
+                //to avoid nan being displayed
+                if(CurrentAmount == ""){
+                    CurrentAmount = 0.00;
+                }
+                if(Total-parseFloat(CurrentAmount) &lt; 0){
+                    setTotal(0.00);
+                    setChange(-(Total-parseFloat(CurrentAmount)));
+                }
+                else{
+                    setTotal((Total) => (Total - parseFloat(CurrentAmount)));
+                    setChange(0.00);
+                }
+            } 
+            catch (error) {
+                alert(CurrentAmount + " is an invalid entry");
+            }   
+            
+            //sets payment back to "" just incase it was used as the current amount
+            SetPaymentAmount("");
+        }
+
+        return(
+            
+            &lt;div className='PaymentInterface'>
+                &lt;div className="PaymentTotals">
+                &lt;div> Total: ${Total.toFixed(2)}&lt;/div>
+                &lt;div> Payment: ${PaymentAmount}&lt;/div>
+                &lt;div> Change: ${Change.toFixed(2)}&lt;/div>
+                &lt;/div>
+
+
+            &lt;div className='Numpad'>
+                &lt;div className="btn-group">    
+                    &lt;button onClick = {() => AddtoPayment(1)}>1&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment(2)}>2&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment(3)} >3&lt;/button>
+                &lt;/div>
+
+                &lt;div className="btn-group" >
+                    &lt;button onClick = {() => AddtoPayment(4)} >4&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment(5)} >5&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment(6)}  >6&lt;/button>
+                &lt;/div>
+
+                &lt;div className="btn-group">
+                    &lt;button onClick = {() => AddtoPayment("7")} >7&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment("8")} >8&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment("9")} >9&lt;/button>
+                &lt;/div>
+
+                &lt;div className="btn-group">
+                    &lt;button onClick= {() => deductfromTotal(PaymentAmount)} > Deduct from Total&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment("0")} >0&lt;/button>
+                    &lt;button onClick = {() => AddtoPayment(".")} >.&lt;/button>
+                &lt;/div>
+
+                &lt;button className="Confirm-Order" onClick={() => {Checkout(setOrders)}}> Confirm Order&lt;/button>
+            &lt;/div>
+        &lt;/div>
+    
+        )
+}
+
+export default PaymentTerminal</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

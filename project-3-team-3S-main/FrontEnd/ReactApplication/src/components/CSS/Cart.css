@@ -1,0 +1,103 @@
+.Cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.Cart .CartList {
+    width: 500px;
+    height: 550px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #cebfbf;
+    list-style-type: none;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.Cart .OrderItem {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #fa2020;
+}
+
+.Cart .listItem {
+    padding: 0;
+    margin: 0;
+}
+
+.Cart .DeleteButton {
+    background-color: black;
+    color: white;
+    float: right;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    cursor: pointer;
+}
+.Cart .DeleteButton:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.Cart .DeleteButton:active {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.Cart .TotalBar {
+    font-size: 20px;
+    width: 500px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #cebfbf;
+    text-align: left;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    margin-bottom: 20px;
+    z-index: 100;
+}
+
+.Cart .ClearButton,
+.Cart .CheckoutButton {
+    font-size: 14px;
+    color: white;
+    background-color: #fa2020;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+
+.Cart .ClearButton:hover,
+.Cart .CheckoutButton:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.Cart .ClearButton:active,
+.Cart .CheckoutButton:active {
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+}
+
+.Cart .ButtonsContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 515px;
+    gap: 10px;
+    
+}
+
+
+.CartContent {
+    display: flex;
+    flex-direction: column;
+}
+
+
+  

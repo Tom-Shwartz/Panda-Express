@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Language.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Language.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import Translator from "./Translator";
+import "./CSS/Language.css";
+/**
+ * Creates the popup content which is a menu that allows the toggling and updating of the language used by Translator 
+ * @component
+ * @example
+ *  &lt;LanguagePopup className = "LanguagePopupContent"SetLanguagePopupStatus={SetLanguagePopupStatus} CurrentLanguage={CurrentLanguage} SetLanguage={SetLanguage}>&lt;/LanguagePopup>
+ * @param {string} CurrrentLanguae - String containing the current google language code used by Translator
+ * @param {Function} SetLanguage - Function that updates the current Lanugage code 
+ * @returns {JSX.Element} - Returns the jsx for the content to be used by the popup
+ */
+function LanguagePopup({CurrentLanguage,SetLanguage}) {
+
+
+    return (
+
+        &lt;div className="LangaugeContent">
+            &lt;label className="LanguageText" >&lt;Translator text="Choose a Language" language={CurrentLanguage}>&lt;/Translator> &lt;/label>
+            &lt;div className="Language-grid">
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("en")}}>English&lt;/button>
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("es")}}>Español&lt;/button>
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("ja")}}>日本語&lt;/button>
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("hi")}}>हिन्दी&lt;/button>
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("zh-CN")}}>中文 (简体)&lt;/button>
+            &lt;button className="LanguageBtn" onClick={() => {SetLanguage("ar")}}>العربية&lt;/button>
+            &lt;/div>
+            &lt;div className="Current-Language-Display">
+            &lt;label> &lt;Translator text="Current Language:" language={CurrentLanguage}>&lt;/Translator> &lt;/label>
+                &lt;br>&lt;/br>
+                {
+                    ((CurrentLanguage === "es")&amp;&amp;(&lt;text> Español &lt;/text>)) ||
+                    ((CurrentLanguage === "en")&amp;&amp;(&lt;text> English &lt;/text>)) ||
+                    (CurrentLanguage === "ja")&amp;&amp;(&lt;text> 日本語 &lt;/text>) ||
+                    (CurrentLanguage === "hi")&amp;&amp;(&lt;text> हिन्दी &lt;/text>) ||
+                    (CurrentLanguage === "zh-CN")&amp;&amp;(&lt;text> 中文 &lt;/text>) ||
+                    (CurrentLanguage === "ar")&amp;&amp;(&lt;text> العربية &lt;/text>) 
+                }
+            
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default LanguagePopup;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

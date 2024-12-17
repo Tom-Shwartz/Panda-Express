@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ManagerOrder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ManagerOrder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+import React, { useEffect, useRef, useState } from "react";
+import PostgresFetcher from "../Classes/PosgresFetcher";
+import "./CSS/ManagerOrder.css"
+import LineChart from "./ManagerCharts";
+const DB = new PostgresFetcher();
+
+
+function FormatOrders(RawOrderObjects){
+   const OrdersList = RawOrderObjects.map((order) => (
+    &lt;div className="orderlist-row">
+    &lt;li key={order.orderid}>  {order.orderid}   &lt;/li>
+    &lt;li key={order.orderid}>${order.totalcost}&lt;/li>
+    &lt;li key={order.orderid}>{order.orderdate}&lt;/li>
+    &lt;/div>
+))
+    
+   return OrdersList;
+    
+}
+/**
+ * Creates the Orders content which is made up of a list of recent orders and graph of orders over time
+ * @component
+ * @example
+ * &lt;Orders/>;
+ * @param {} - no parameters are needed 
+ * @returns {JSX.Element} - Returns the jsx for Orders 
+ */
+function Orders(){
+    
+    const [orderperweeksdata_Y,setOrderYdata] = useState([]);
+    const [orderperweeksdata_X,setOrderXdata] = useState([]);
+    const [RecentOrders,setRecentOrders] = useState([]);
+    
+    const [timeframe,setTimeframe] = useState("weeks");
+ 
+     useEffect(() => {
+         async function GetOrderDataPerweek() {
+             const ordersPerweek = await DB.CustomSQL(`select DATE_Trunc('${timeframe}',orderdate::timestamp)::date as OrderTime, Count(orderid) AS TotalOrders from order_history group by Date_trunc('${timeframe}',orderdate::timestamp) Order by OrderTime asc;`,"totalorders");
+             const orderX = await DB.CustomSQL(`select DATE_Trunc('${timeframe}',orderdate::timestamp)::date as OrderTime, Count(orderid) AS TotalOrders from order_history group by Date_trunc('${timeframe}',orderdate::timestamp) Order by OrderTime asc;`,"ordertime");
+             const ImportedOrders = await DB.CustomSQL("select * from order_history group by orderid order by orderid desc limit 1000;");
+            
+             console.log(RecentOrders);
+             setOrderYdata( ordersPerweek.map(str => parseInt(str)));
+             //handles weird data type remenants when improting dates from postgres
+             setOrderXdata(orderX.map(str => str.slice(0,10)));
+             setRecentOrders(ImportedOrders);
+          }
+         GetOrderDataPerweek();
+     },[]);
+ 
+     return(
+        &lt;div className="ManagerOrder-Content">
+            &lt;div className="Orders-Chart-Container">
+                &lt;LineChart className='SalesChart' Xdata={orderperweeksdata_X} Ydata={orderperweeksdata_Y} Ylabel={"Order Per " + timeframe} >&lt;/LineChart>
+            &lt;/div>
+            &lt;div className="Order-History-Container">
+                &lt;label className="Orderlist-title"> Recent Order History &lt;/label>
+                &lt;ul className="RecentOrdersList">
+                    &lt;div className="orderlist-row">
+                        &lt;li key={1}> ORDER ID:&lt;/li>
+                        &lt;li key={1}> OrderCost:&lt;/li>
+                        &lt;li key={1}>DATE:&lt;/li>
+                    &lt;/div>
+                    {FormatOrders(RecentOrders)}
+                &lt;/ul>
+            &lt;/div>
+
+        &lt;/div>
+     )    
+ }
+ export default Orders;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

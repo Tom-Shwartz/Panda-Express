@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/PricingMenu.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/PricingMenu.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState,useEffect } from "react";
+import PostgresFetcher from "../Classes/PosgresFetcher";
+
+import  "./CSS/PricingMenu.css"
+
+const DB = new PostgresFetcher();
+
+
+function FormatPricingItems(ItemNames,Prices,setSelectedItem,SetNewPrice){
+        
+    const FormattedItemList = ItemNames.map((ItemName,index) => (
+               &lt;div id={index} className="PricingRow" onClick={() => {setSelectedItem([ItemName,Prices[index]]);}}> 
+                    &lt;li id={ItemName} className="MenuNames"> {ItemName} &lt;/li>
+                    &lt;li id={Prices[index]} className="MenuPrices">${Prices[index]}&lt;/li>   
+                &lt;/div>
+            ));
+            
+            
+            
+            
+            
+       
+    return FormattedItemList;
+
+}
+function addtoNewprice(inputInteger,SetNewPrice,NewPrice){
+    SetNewPrice(NewPrice+inputInteger);
+}
+function removefromNewprice(SetNewPrice,NewPrice){
+    SetNewPrice(NewPrice.slice(0,-1));
+}
+function UpdatePrice(SetNewPrice,NewPrice,SetSelectedItem,SelectedItem){
+    try {
+        DB.CustomSQL(`UPDATE combo_type_enum SET base_price = '${parseFloat(NewPrice)}' where type = '${SelectedItem[0]}'`); 
+        SetSelectedItem([SelectedItem[0],parseFloat(NewPrice)]);
+        SetNewPrice("");
+    } catch (error) {
+        alert("Not a valid number for newprice try again");
+    }
+    
+}
+
+ /**
+ * Used to generate the Pricing Menu Jsx that allows the updating of prices dynamically
+ * @component
+ * @example
+ * &lt;PricingMenu setPricingState = {SetPricingState}>&lt;/PricingMenu>
+ * @param {Function} setPricingState - updates the state of popup that contains the pricing menu content
+ * @returns {JSX.Element} - Returns the jsx for the Pricing Menu 
+ */
+function PricingMenu({setPricingState}) {
+
+const [MenuItemList,SetMenuItemList] = useState([]); 
+const [MenuPrices,SetMenuPrices] = useState([]);
+const [NewPrice, SetNewPrice] = useState("");
+const [SelectedItem,setSelectedItem] = useState(["",0.00]);
+    
+
+    useEffect(()=>{
+    async function GetItemNamesAndPricing(){
+        
+        const ListofItems = await DB.GetColumn("combo_type_enum","type");
+        const ListofPrices = await DB.GetColumn("combo_type_enum","base_price");
+        //get column returns arrays instead of the array of objects TODO: fix fetcher to do this for the user 
+        SetMenuItemList( (await ListofItems).map(items => (items.type)));
+        SetMenuPrices( (await  ListofPrices).map(items => (items.base_price)));
+    } 
+
+        GetItemNamesAndPricing();
+    },[NewPrice,SelectedItem]);
+
+
+
+    return(
+        &lt;div className="PricingContent">
+            &lt;div className="PricingListContainer">
+                &lt;ul className="PricingItemsList"> 
+                &lt;div className="PricingHeadContainer"> &lt;label> MENU  &lt;/label>&lt;/div>    
+                {FormatPricingItems(MenuItemList,MenuPrices,setSelectedItem,SetNewPrice)}
+                &lt;/ul>
+            &lt;/div>
+
+            &lt;div className="NewPriceContainer">
+                &lt;label className="PricingSelectedItem"> {(SelectedItem[0] === "")? "choose an item to change price": "Selected: "+SelectedItem[0]}  &lt;/label>
+                &lt;div className="PricesFields">
+                    &lt;label> {(SelectedItem[0] === "")? "": "Old Price: $" + (SelectedItem[1])} &lt;/label>
+                    &lt;br>&lt;/br>
+                    &lt;br>&lt;/br>
+                    &lt;label>NewPrice: $: {NewPrice}&lt;/label>
+                &lt;/div>
+                &lt;div className="PricingInputContainer">
+                    &lt;div className='Pricing-numpad'>
+                        &lt;div className="numpad-group">    
+                            &lt;button onClick = {() => addtoNewprice("1",SetNewPrice,NewPrice)}>1&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("2",SetNewPrice,NewPrice)}>2&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("3",SetNewPrice,NewPrice)} >3&lt;/button>
+                        &lt;/div>
+
+                        &lt;div className="numpad-group" >
+                            &lt;button onClick = {() => addtoNewprice("4",SetNewPrice,NewPrice)} >4&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("5",SetNewPrice,NewPrice)} >5&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("6",SetNewPrice,NewPrice)}  >6&lt;/button>
+                        &lt;/div>
+
+                        &lt;div className="numpad-group">
+                            &lt;button onClick = {() => addtoNewprice("7",SetNewPrice,NewPrice)} >7&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("8",SetNewPrice,NewPrice)} >8&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("9",SetNewPrice,NewPrice)} >9&lt;/button>
+                        &lt;/div>
+
+                        &lt;div className="numpad-group">
+                            &lt;button onClick= {() => removefromNewprice(SetNewPrice,NewPrice)} > Back&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice("0",SetNewPrice,NewPrice)} >0&lt;/button>
+                            &lt;button onClick = {() => addtoNewprice(".",SetNewPrice,NewPrice)} >.&lt;/button>
+                        &lt;/div>
+
+                        &lt;button className="Confirm-Price" onClick={() => {UpdatePrice(SetNewPrice,NewPrice,setSelectedItem,SelectedItem)}}> Update Price&lt;/button>
+                 &lt;/div>
+                &lt;/div>
+            &lt;/div>
+
+        &lt;/div>
+    );
+}
+
+export default PricingMenu</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

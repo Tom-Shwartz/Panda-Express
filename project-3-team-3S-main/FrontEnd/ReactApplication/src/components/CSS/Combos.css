@@ -1,0 +1,176 @@
+.cashier .combos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%; 
+    height: calc(100vh - 60px);
+}
+
+.customer .combos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%; 
+    height: calc(100vh - 60px);
+    
+}
+
+
+
+.cashier .combos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%; 
+    height: calc(100vh - 60px);
+    margin-top: 5vh;
+    margin-left: 5vw;
+}
+
+.customer .combos-button {
+    flex-grow: 1;
+    height: 60px;
+    font-size: 16px;
+    background-color: #fa2020;
+    color: white;
+    border: 2px,2px,2px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+ .combos-button:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.cashier .combos-button {
+    flex-grow: 1;
+    height: 60px;
+    font-size: 18px;
+    background-color: #242525;
+    color: white;
+    border: 3px 3px 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.combo-image {
+    width: 200px;
+    height: 150px;
+    /* margin-bottom: 5px; */
+  }
+
+/*****POPUP CSS****************************************************/
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    font-weight: 700;
+    max-height: 70vh;
+    overflow-y: scroll;   
+    scroll-behavior: auto; /* Ensure no animation affects scroll */
+    scrollbar-width: none;
+   
+
+  }
+
+
+.combo-popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+    padding: 20px;
+   
+}
+
+.combo-popup-content h1{
+    size: 10px;
+    align-items: center;
+    text-align: center;
+
+  }
+
+  .combo-popup-content button{
+    height: 50px;
+    font-weight: 700;
+    width: 50px;
+    color: whitesmoke;
+    background-color: #fa2020;
+    
+  }
+
+  .ComboCloseBtn{
+    background-color: #fa2020;
+
+    width: 100px;
+    height: 60px;
+    color: white;
+    position: fixed;
+    bottom: 5vh;
+    right: 43vw;
+    cursor: pointer;
+  }
+
+  .ComboCloseBtn:hover {
+    background-color: grey;
+    box-shadow: rgba(50, 50, 93, 0.7) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
+  }
+  
+
+  .SkipBtn{
+    background-color: #fa2020;
+
+    width: 100px;
+    height: 60px;
+    color: white;
+    position: sticky;
+    margin-right: 20px;
+    position: fixed;
+    bottom: 5vh;
+    left: 43vw;
+    cursor: pointer;
+  }
+
+  .SkipBtn:hover {
+    background-color: grey;
+    box-shadow: rgba(50, 50, 93, 0.7) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
+  }
+
+.EntreePopup{
+   
+   max-height: 180vh;
+}
+
+.accessibility-button-combos{
+  flex-grow: 1;
+  height: 400px;
+  font-size: 23px;
+  background-color: black;
+  color: white;
+  border: 2px,2px,2px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.accessibility-button-combos:hover {
+  transform: scale(1.1);
+}
+
+.accessibility-container-combos{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 90%;
+  
+}
+
+.accessibility-image-combos{
+  width: 350px;
+  height: 250px;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ManagerReports.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ManagerReports.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useRef, useState } from "react";
+import PostgresFetcher from "../Classes/PosgresFetcher";
+import "./CSS/ManagerReports.css"
+const DB = new PostgresFetcher();
+
+
+async function GetCurrentTime(){
+    return await DB.CustomSQL("SELECT TO_CHAR(NOW(), 'YYYY-MM-DD HH24:MI:SS') as Today","today")
+}
+
+/**
+ * Creates the jsx content for the Reports which includes the x and z reports along wiht their respective buttons
+ * @component
+ * @example
+ *  &lt;/Reports>
+ * @param {}  - no input parameters
+ * @returns {JSX.Element} - Returns the jsx for Reports
+ */
+function Reports(){
+
+    const [ZReportState,SetZreportState] = useState(false)
+    const [Zreport,setZreport] = useState(["Click Zreport to generate Zreport"]);
+
+    const [XReportState,SetXreportState] = useState(false)
+    const [Xreport,setXreport] = useState(["Click Xreport Button to Generate Xreport"]);
+    const [LastRunDate, setLastRunDate] = useState(() => { const storedDate = localStorage.getItem("LastRunDate");  return (storedDate)?storedDate:"2024-12-2 19:15:08"});
+    
+    //handles the xreport generation
+    useEffect(() => {
+        if(!XReportState){return;}
+
+        async function GetReportData() {
+            var Hours = await DB.CustomSQL(`SELECT date_trunc('hour', hourslist) as HoursSequence FROM generate_series( '${LastRunDate}'::timestamp, CURRENT_TIMESTAMP::timestamp, '1 hour'::interval) hourslist  ORDER BY HoursSequence DESC;`,"hourssequence")
+            const numSales = await DB.CustomSQL(`SELECT COUNT( DISTINCT orderid) as NumberOfSales, DATE_TRUNC('hour', orderdate::timestamp ) as HourDate FROM order_history WHERE orderdate::timestamp &lt;=  CURRENT_TIMESTAMP and orderdate::timestamp >= '${LastRunDate}' GROUP BY HourDate ORDER BY HourDate DESC;`,"numberofsales");
+            var SalesHours = await DB.CustomSQL( `SELECT COUNT( DISTINCT orderid) as NumberOfSales, DATE_TRUNC('hour', orderdate::timestamp ) as HourDate FROM order_history WHERE orderdate::timestamp &lt;=  CURRENT_TIMESTAMP and orderdate::timestamp >= '${LastRunDate}' GROUP BY HourDate ORDER BY HourDate DESC;`,"hourdate");
+           
+            Hours = Hours.map(str => str.slice(0,10)+" "+str.slice(11,19));
+            SalesHours = SalesHours.map(str => str.slice(0,10)+" "+str.slice(11,19));
+
+            //needed since we need to combine series of hours and sales information
+            for (let i = 0; i &lt; Hours.length; i++) {
+                let ismatch = false;
+               for(let j = 0; j &lt; Hours.length; j++){
+                    if( Hours[i] == SalesHours[j]){
+                        Hours[i] = SalesHours[j] + " ............ Sales: " + numSales[j];
+                        ismatch = true;
+                    }
+               }
+                if(!(ismatch)){
+                    Hours[i] += " ............ Sales: 0"
+                }
+            }
+
+            setXreport(Hours);
+            SetXreportState(false);
+        }
+    
+        GetReportData(); 
+    },[XReportState]);
+
+    
+
+    //handles the zreport generation
+    useEffect(() => {
+        
+        if(!ZReportState){return;}
+        
+        async function GetZreport() {
+           const Total = parseInt(await  DB.CustomSQL(`SELECT SUM(unique_orders.total_order_cost) AS GrossTotal FROM (SELECT orderid, SUM(totalcost) AS total_order_cost FROM order_history WHERE orderdate::timestamp >= '${LastRunDate}'::timestamp AND orderdate::timestamp &lt;= NOW() GROUP BY orderid) AS unique_orders;`,"grosstotal"));
+           const TaxAmount = (Total/1.0825) * 0.0825
+           const NetTotal = Total+TaxAmount;
+           const CurrentTime = await GetCurrentTime();
+           const ZreportList = ["Date: "+ (CurrentTime),"Net Total: ",NetTotal.toFixed(2),"Total Tax Paid: ",TaxAmount.toFixed(2),"Gross Total: ",Total.toFixed(2)]
+
+            
+
+            setLastRunDate(CurrentTime);
+            localStorage.setItem("LastRunDate",CurrentTime);
+            SetZreportState(false);
+            setZreport(ZreportList);
+        }
+        
+        GetZreport();
+        
+    },[ZReportState]);
+    
+
+    return(
+        &lt;div className="ReportContents">
+            &lt;div className="XreportContents">
+                &lt;button className="Xreport-Button" onClick={()=>{SetXreportState(true)}}> Xreport &lt;/button>
+                &lt;ul className="Xreport-List">
+                &lt;li className="Xreport-List-header"> sales per hour &lt;/li>
+                    {Xreport.map(sales => (
+                        &lt;li className="Xreport-List-items"> {sales} &lt;/li> 
+                    ))}
+                &lt;/ul>
+            &lt;/div>
+
+            &lt;div className="ZreportContents">
+                &lt;button className="Zreport-Button" onClick={() => {SetZreportState(true)}}> Zreport &lt;/button>
+                &lt;ul className="Zreport-list">
+                {Zreport.map(sales => (
+                        &lt;li className="Zreport-List-items"> {sales} &lt;/li> 
+                    ))}
+                &lt;/ul>
+            &lt;/div>
+        &lt;/div>
+    )
+
+}
+
+
+export default Reports</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

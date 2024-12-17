@@ -1,0 +1,247 @@
+  .customer {
+    display: flex;
+    /* grid-template-columns: repeat(4, 1fr); */
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 80%;
+    margin-left: 20px;
+    
+  }
+
+  
+  .cashier{
+    display: flex;
+    flex-direction: row;
+    flex-shrink: inherit;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 80%;
+    margin-left: 50px;
+    /*need margin top to fix clipping*/
+    margin-top: 50vh;
+    width: 100vw;
+    height: 75vh;
+    margin-bottom: 20vh;
+    
+    
+  }
+  
+  .customer .entrees-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+    font-size: 16px;
+    background-color: #fa2020;
+    color: white;
+    border: 2px,2px,2px;
+    border-radius: 5px;
+    cursor: pointer;  
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    font-weight: 700;
+    
+  }
+
+   .entrees-button:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+   .entrees-button:active {
+    box-shadow: rgba(50, 50, 93, 0.8) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.9) 0px 18px 36px -18px inset;
+  }
+  
+
+  
+  .cashier .entrees-container{
+    margin-right: 5vw;
+    margin-left: -5vw;
+  
+  }
+  .cashier .entrees-button {
+    display: flexbox;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 170px;
+    height: 170px;
+   
+    font-size: 16px;
+    background-color: #242525;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;  
+    font-weight: 700;
+  }
+  
+  .entrees-button img {
+    margin-bottom: 10px;
+  }
+
+  .entrees-image{
+    width: 150px;
+    height: 100px;
+  }
+  
+
+   .size-buttons{
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    margin-top: 10px;
+    font-weight: 900;
+  }
+
+  .size-buttons button{
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .DecreaseButton{
+    background-color: red;
+    font-size: x-large;
+    text-align: center;
+    width: 3vw;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    
+  }
+  .DecreaseButton:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+
+  .IncreaseButton{
+    background-color: red;
+    text-align: center;
+    font-size: x-large;
+    width: 3vw;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  }
+
+  .IncreaseButton:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+  .AmountValue{
+    height: 3vh;
+    font-size: x-large;
+  }
+  .cashier .size-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .popup-button {
+    background-color:#fa2020;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+
+  .popup-button:hover {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+
+
+  .my-popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border: none;
+    border-radius: 3px;
+    background-color: none;
+  }
+
+/*****COMBO VIEW BUTTON CSS****************************************************/
+
+
+  .customer .combo-entree-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 140px;
+    height: 200px;
+    font-size: 16px;
+    background-color: #fa2020;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;  
+  }
+
+
+   .combo-entree-button:hover {
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+  }
+
+   .combo-entree-button:active {
+    box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.7) 0px 18px 36px -18px inset;
+  }
+
+  .cashier .combo-entree-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 140px;
+    height: 170px;
+    font-size: 16px;
+    background-color: #242525;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;  
+  }
+
+  .cashier:has(.combo-entree-button){
+    margin-top: 5vh;
+    height: 100vh;
+  }
+
+
+
+  .combo-entree-button img {
+    margin-bottom: 10px;
+    width: 120px;
+    height: 120px;
+  }
+/*****Accessibility container*******************************************************/
+  .accessibility-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 300px;
+  }
+  
+  .accessibility-button-entrees {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 300px;
+    height: 300px;
+    font-size: 25px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .accessibility-button-entrees:hover {
+    transform: scale(1.1);
+  }
+
+  .accessibility-image-entrees{
+    width: 300px;
+    height: 200px;
+  }
+  

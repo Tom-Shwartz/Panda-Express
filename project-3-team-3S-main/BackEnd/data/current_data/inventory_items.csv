@@ -1,0 +1,58 @@
+id,item_name,amount,price,unit
+7,Beef,200,7.65,lb
+11,Broccoli,25,1.68,lb
+25,Carrots,20,0.98,lb
+26,Soybean Oil,200,0.11,oz
+27,Canola Oil,200,0.09,oz
+28,Salt,75,0.42,lb
+29,Sugar,50,0.79,lb
+30,Kale,10,1.57,lb
+31,Garlic,15,4.44,lb
+34,Potato Starch,10,3.07,lb
+35,Sesame Oil,350,0.64,oz
+36,Shrimp,75,7.00,lb
+37,Glazed Walnuts,15,1.89,lb
+38,Rice Flour,15,2.95,lb
+39,Evaporated Milk,48,1.22,oz
+40,Yeast,5,4.21,lb
+41,Zucchini,20,1.79,lb
+42,Yellow Bell Pepper,20,1.50,lb
+43,Roasted Peanuts,10,2.49,lb
+44,Pinneaple ,15,1.98,lb
+45,Red Jalapenos,15,2.58,lb
+46,Straws,400,0.05,count
+51,Larger Plate,300,0.27,count
+52,Large Cup,200,0.30,count
+53,Medium Cup,300,0.20,count
+54,Small Cup,500,0.15,count
+4,Onion,8,1.37,lb
+5,Green Onion,39,2.00,lb
+56,Wrappers,200,0.02,count
+23,Eggs,39,2.41,lb
+15,Mushrooms,160,3.12,lb
+14,Baby Broccoli,28,1.68,lb
+1,Cabbage,41,0.70,lb
+13,Sirloin Steak,76,10.94,lb
+20,Black Pepper Powder,100,0.89,oz
+21,Black Pepper Chicken Sauce,1063,0.19,oz
+2,Wheat Flour,85,0.60,lb
+33,Chicken,90,2.47,lb
+6,Celery,47,1.30,lb
+8,Red bell pepper,53,1.48,lb
+12,Broccoli Beef Sauce,1000,0.20,oz
+16,tomato paste,15,0.14,oz
+49,Bowl,582,0.15,count
+19,Black Pepper Sirloin Steak Corn Starch,175,0.15,oz
+18,Soy Sauce Powder,10,0.16,oz
+9,Distilled Vinegar,310,0.03,oz
+32,Soy Sauce,760,0.28,oz
+3,Chow Mein Sauce,1300,0.18,oz
+22,White rice,305,0.88,lb
+24,Peas ,20,0.69,lb
+10,Bejing Beef Food Starch,175,0.16,oz
+17,miso paste,39,0.39,oz
+50,Plate,380,0.20,count
+48,Utensils,458,0.04,count
+55,Napkin,-78,2.25,lb
+47,Bags,290,0.07,count
+57,Bourbon Sauce,30,0.25,oz

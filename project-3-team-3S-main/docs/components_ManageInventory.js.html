@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ManageInventory.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ManageInventory.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import './CSS/ManageInventory.css';
+import PostgresFetcher from '../Classes/PosgresFetcher';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+const DB = new PostgresFetcher();
+
+
+/**
+ * React component for managing inventort. This includes adding, removing, and updating menu and inventory details,
+ * as well as interacting with a database to fetch and update menu and inventory information.
+ * Component to manage inventory items.
+ * @component
+ * @returns {JSX.Element} - The rendered InventoryManagement component.
+ */
+function ManageInventory() {
+
+    const [inventoryList,setInventory] = useState([]);
+    const [units, setUnit] = useState(["lb"]);
+    const [test, settest] = useState([""]);
+    const [amountList, setAmount] = useState([""]);
+    const [countList, setCount] = useState([""]);
+    const [updateamountList, updatesetAmount] = useState([""]);
+    const [updatecountList, updatesetCount] = useState([""]);
+    const [inputs, setInputs] = useState([""]);
+    //for menu items
+    const [menuinputs, setmenuInputs] = useState([""]);
+    const [costinputs, setcostInputs] = useState([""]);
+    const [amountinputs, setamountInputs] = useState([""]);
+    const [ftinputs, setftInputs] = useState(["entree"]);
+    const [ingreinputs, setingreInputs] = useState([""]);
+    const [invusedinputs, setinvusedInputs] = useState([""]);
+    const [updatemenuItems, setupdateMenuitem] = useState([""]);
+    const [updateinge, setupdateingre] = useState([""]);
+    const [updateingeused, setupdateingreused] = useState([""]);
+    const [updatemenuamount, setupdatemenuamount] = useState([""]);
+    const [updatemenucost, setupdatemenucost] = useState([""]);
+    const [updatemenutype, setupdatemenutype] = useState([""]);
+
+
+    /**
+     * Fetches every inventory item from the database.
+     * @async
+     * @returns {Promise&lt;number[]>} An array of the inventory list. 
+     */
+    async function getInventoryfromDatabase() {
+        const getinventoryList = await DB.CustomSQL("select * from inventory_items",'item_name');
+
+        return Array.from({ length: getinventoryList.length }, (_, i) => 
+            getinventoryList[i]
+        );
+    }
+    useEffect(() => {
+        /**
+         * Fetches inventory and menu item data from the database and updates component state.
+         * @async
+         */
+        async function waitonInvt() {
+            const RetrievedInvent = await getInventoryfromDatabase();
+            const RetrievedUnit = await DB.CustomSQL("select * from inventory_items" , 'unit');
+            const RetrievedMenu = await DB.CustomSQL("select * from menu_items" ,'food_name' );
+            const RetrievedType = await DB.CustomSQL("select * from menu_items", 'food_type');
+            setInventory(RetrievedInvent);
+            settest(RetrievedUnit);
+            setupdateMenuitem(RetrievedMenu);
+            setupdatemenutype(RetrievedType);
+        }
+        waitonInvt();
+    },[])
+
+    /**
+     * Removes an inventory item input field if the X is clicked.
+     * 
+     * @function removeitemFrom
+     * @param {number} index - The index of the inventory item field to be remove.
+     */
+    const removeitemFrom = (index) => {
+        if (inputs.length > 1) {
+            setInputs(inputs.slice(0, -1));
+            setUnit(units.filter((_, i) => i !== index));
+            setAmount(amountList.slice(0,-1));
+            setCount(countList.slice(0,-1));
+        }
+    }
+
+    /**
+     * Adds a new input field for inventory items.
+     */
+    const addToitem = () => {
+        setInputs([...inputs, ""]); 
+        setUnit([...units, ""]);
+    }
+
+    /**
+     * Adds new inventory items to the database.
+     *
+     * @param {string[]} item - Array of item names to add.
+     * @param {string[]} a - Array of amounts for each item.
+     * @param {string[]} c - Array of counts for each item.
+     * @param {string[]} u - Array of units for each item (e.g., "lb", "oz").
+     */
+
+    async function additemtoDB(item,a,c,u) {
+
+        let itemnull = [];
+        let anull = [];
+        let cnull = [];
+        let unull = [];
+        for (let i = 0; i &lt; item.length; i++) {
+            if(item[i] !== "") {
+                itemnull[i] = item[i];
+                anull[i] = a[i];
+                cnull[i] = c[i];
+                unull[i] = u[i];
+                console.log("Amounts:", amountList);
+                console.log("Counts:", countList);
+                console.log("unit:", unull);
+                console.log("item:", itemnull);
+                DB.CustomSQL(`INSERT INTO inventory_items VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM inventory_items), '${itemnull[i]}' , ${anull[i]} , ${cnull[i]}, '${unull[i]}')`);
+            }
+            
+        }
+        const updatedInventory = await getInventoryfromDatabase();
+        setInventory(updatedInventory);
+        alert("Items Added to Database!");
+    }
+  
+    /**
+     * Renders the Add Item section of the inventory management system.
+     * @returns {JSX.Element} The rendered Add Item section.
+     */
+    const renderAddItem = () => (
+        &lt;div className="manage-employee-container secondary">
+          &lt;h2>Add Items&lt;/h2>
+          &lt;div className="employee-grid">
+            {inputs.map((label, index) => (
+              &lt;div key={index} className="employee-row">
+                &lt;button className="remove-btn" onClick={() => removeitemFrom(index)}>
+                  ✖
+                &lt;/button>
+                &lt;input
+                    className="name-input"
+                    value={label}
+                    placeholder="Item Name"
+                    onChange={(e) => {
+                        const updatedInputs = [...inputs];
+                        updatedInputs[index] = e.target.value;
+                        setInputs(updatedInputs);
+                    }}
+                />
+                &lt;input
+                    className="name-input"
+                    value={amountList[index]}
+                    placeholder="AMOUNT"
+                    onChange={(e) => {
+                        const updatedAmount = [...amountList];
+                        updatedAmount[index] = e.target.value;
+                        setAmount(updatedAmount);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={countList[index]}
+                    placeholder="COUNT"
+                    onChange={(e) => {
+                        const updatedCount = [...countList];
+                        updatedCount[index] = e.target.value;
+                        setCount(updatedCount);
+                    }}
+                />
+                &lt;select
+                  className="position-dropdown"
+                  value={units[index]}
+                  onChange={(e) => {
+                    const updatedUnit = [...units];
+                    updatedUnit[index] = e.target.value;
+                    setUnit(updatedUnit);
+                  }}
+                >
+                  &lt;option value="lb">lb&lt;/option>
+                  &lt;option value="oz">oz&lt;/option>
+                  &lt;option value="count">count&lt;/option>
+                &lt;/select>
+              &lt;/div>
+            ))}
+            &lt;button className="add-btn" onClick={addToitem}>+&lt;/button>
+
+          &lt;/div>
+          &lt;button className='save-btn' onClick={() => additemtoDB(inputs,amountList,countList,units)}>Add Items&lt;/button>
+        &lt;/div>
+      );
+
+
+    /**
+     * Removes an inventory item from the database and updates the state.
+     * 
+     * @async
+     * @function removeitemFromdb
+     * @param {number} index - The index of the inventory item to remove.
+     */
+    const removeitemFromdb = async (index) => {
+        const specItem = inventoryList[index];
+        await DB.CustomSQL(`DELETE FROM inventory_items WHERE item_name = '${specItem}'`);
+
+        const updatedItems = [...inventoryList];
+        updatedItems.splice(index, 1);
+        setInventory(updatedItems);
+        alert(`${specItem} Removed`);
+    }
+
+    /**
+     * Updates an inventory items details in the database.
+     * 
+     * @async
+     * @param {number} index - The index of the inventory item to update.
+     */
+    const updateInvetorydb = async(index) => {
+        const specAmount = updateamountList[index];
+        const specCost = updatecountList[index];
+        const specItem = inventoryList[index];
+        const specUnit = test[index];
+        if(updateamountList[index] &amp;&amp; updateamountList[index].trim() !== "") {
+          await DB.CustomSQL(`UPDATE inventory_items SET amount = ${specAmount}  WHERE item_name = '${specItem}'`);
+        } if(updatecountList[index] &amp;&amp; updatecountList[index].trim() !== "") {
+          await DB.CustomSQL(`UPDATE inventory_items SET price = ${specCost} WHERE item_name = '${specItem}'`);
+        }
+        await DB.CustomSQL(`UPDATE inventory_items SET unit = '${specUnit}'  WHERE item_name = '${specItem}'`);
+        alert(`${specItem} Updated`);
+      }
+
+      const renderUpdateItems = () => (
+        &lt;div className="manage-employee-container secondary">
+          &lt;h2>Update Items&lt;/h2>
+          &lt;div className="employee-grid">
+            {inventoryList.map((label, index) => (
+              &lt;div key={index} className="employee-row">
+                &lt;button className="remove-btn" onClick={() => removeitemFromdb(index)}>
+                  ✖
+                &lt;/button>
+                &lt;button onClick={() => updateInvetorydb(index)}>{label}&lt;/button>
+
+                &lt;input
+                    className="name-input"
+                    value={updateamountList[index]}
+                    placeholder="AMOUNT"
+                    onChange={(e) => {
+                        const updatedAmount = [...updateamountList];
+                        updatedAmount[index] = e.target.value;
+                        updatesetAmount(updatedAmount);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={updatecountList[index]}
+                    placeholder="COUNT"
+                    onChange={(e) => {
+                        const updatedCount = [...updatecountList];
+                        updatedCount[index] = e.target.value;
+                        updatesetCount(updatedCount);
+                    }}
+                />
+                &lt;select
+                  className="position-dropdown"
+                  value={test[index]}
+                  onChange={(e) => {
+                    const updatedUnits = [...test];
+                    updatedUnits[index] = e.target.value;
+                    settest(updatedUnits);
+                  }}
+                >
+                  &lt;option value="lb">lb&lt;/option>
+                  &lt;option value="oz">oz&lt;/option>
+                  &lt;option value="count">count&lt;/option>
+                &lt;/select>
+              &lt;/div>
+            ))}
+
+          &lt;/div>
+        &lt;/div>
+      );
+
+      /**
+     * Removes a menu item input field if the X is clicked.
+     * 
+     * @param {number} index - The index of the menu item field to be remove.
+     */
+      const removeMenuFrom = (index) => {
+        if (menuinputs.length > 1) {
+          setmenuInputs(menuinputs.slice(0, -1));
+          setftInputs(ftinputs.filter((_, i) => i !== index));
+          setcostInputs(costinputs.slice(0,-1));
+          setamountInputs(amountinputs.slice(0,-1));
+          setingreInputs(ingreinputs.slice(0,-1));
+          setinvusedInputs(invusedinputs.slice(0,-1));
+        }
+      }
+
+    
+    /**
+     * Adds a new input field for menu items.
+     */
+    const addToMenuitem = () => {
+      setmenuInputs([...menuinputs, ""]); 
+      setftInputs([...ftinputs, ""]);
+    }
+
+    /**
+     * Adds a new menu item to the database, 
+     * including ingredients and associated inventory 
+     * along with the cost and amounts used.
+     * 
+     * @async
+     */
+    async function addMenutoDB() {
+      try {
+        for (let i = 0; i &lt; menuinputs.length; i++) {
+            if (menuinputs[i] !== "") {
+                const foodName = menuinputs[i];
+                const foodType = ftinputs[i];
+                const cost = parseFloat(costinputs[i]) || 0; 
+                const ingredients = ingreinputs[i].split(","); 
+                const inventoryUsed = invusedinputs[i].split(","); 
+                const amounts = amountinputs[i];
+
+                if (inventoryUsed.length !== amounts.length) {
+                    console.error("Mismatch between inventory used and amounts");
+                    continue;
+                }
+
+                await DB.CustomSQL(`INSERT INTO menu_items VALUES ((SELECT COALESCE(MAX(food_id), 0) + 1 FROM menu_items), '${foodName}', ${cost}, ${amounts},'${foodType}')`);
+
+                for (let j = 0; j &lt; inventoryUsed.length; j++) {
+                    const inventoryName = inventoryUsed[j].trim();
+                    const ingresplice = ingredients[j].trim();
+
+                    await DB.CustomSQL(
+                        `INSERT INTO menu_ingredients VALUES ((SELECT COALESCE(MAX(ingredient_id), 0) + 1 FROM menu_ingredients) ,(SELECT MAX(food_id) AS food_id FROM menu_items WHERE food_name = '${foodName}'), '${ingresplice}', ${inventoryName})`
+                    );
+                }
+
+                alert(`Successfully added menu item: ${foodName}`);
+            }
+            const updateMenu = await DB.CustomSQL("select * from menu_items" ,'food_name' );
+            setupdateMenuitem(updateMenu);
+        }
+      } catch (error) {
+          console.error("Error adding menu items:", error);
+      }
+
+    }
+
+    /**
+     * Renders the Add Menu Items section for the menu management system.
+     * @returns {JSX.Element} The rendered Add Menu Items section.
+     */
+      const renderMenuItems = () => (
+        &lt;div className="manage-employee-container secondary">
+          &lt;h2>Add Items&lt;/h2>
+          &lt;div className="employee-grid">
+            {menuinputs.map((label, index) => (
+              &lt;div key={index} className="employee-row">
+                &lt;button className="remove-btn" onClick={() => removeMenuFrom(index)}>
+                  ✖
+                &lt;/button>
+                &lt;input
+                    className="name-input"
+                    value={label}
+                    placeholder="Food Name"
+                    onChange={(e) => {
+                        const updatedmenuInputs = [...menuinputs];
+                        updatedmenuInputs[index] = e.target.value;
+                        setmenuInputs(updatedmenuInputs);
+                    }}
+                />
+                &lt;input
+                    className="name-input"
+                    value={ingreinputs[index]}
+                    placeholder="Ingredients"
+                    onChange={(e) => {
+                        const updatedmenuIngre = [...ingreinputs];
+                        updatedmenuIngre[index] = e.target.value;
+                        setingreInputs(updatedmenuIngre);
+                    }}
+                />
+                &lt;input
+                    className="name-input"
+                    value={invusedinputs[index]}
+                    placeholder="Inventory Used"
+                    onChange={(e) => {
+                        const updatedmenuInv = [...invusedinputs];
+                        updatedmenuInv[index] = e.target.value;
+                        setinvusedInputs(updatedmenuInv);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={amountinputs[index]}
+                    placeholder="Amount"
+                    onChange={(e) => {
+                        const updatedmenuAmount = [...amountinputs];
+                        updatedmenuAmount[index] = e.target.value;
+                        setamountInputs(updatedmenuAmount);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={costinputs[index]}
+                    placeholder="Cost"
+                    onChange={(e) => {
+                        const updatedmenyuCost = [...costinputs];
+                        updatedmenyuCost[index] = e.target.value;
+                        setcostInputs(updatedmenyuCost);
+                    }}
+                />
+                &lt;select
+                  className="position-dropdown"
+                  value={ftinputs[index]}
+                  onChange={(e) => {
+                    const updatedFT = [...ftinputs];
+                    updatedFT[index] = e.target.value;
+                    setftInputs(updatedFT);
+                  }}
+                >
+                  &lt;option value="entree">entree&lt;/option>
+                  &lt;option value="side">side&lt;/option>
+                  &lt;option value="Appetizer">Appetizer&lt;/option>
+                &lt;/select>
+              &lt;/div>
+            ))}
+            &lt;button className="add-btn" onClick={addToMenuitem}>+&lt;/button>
+
+          &lt;/div>
+          &lt;button className='save-btn' onClick={() => addMenutoDB()}>Add Items&lt;/button>
+        &lt;/div>
+      );
+
+      /**
+       * Removes a menu item from the database and updates the UI to reflect the change.
+       *
+       *
+       * @async
+       * @param {number} index - The index of the menu item to be removed.
+       */
+      const removemenuitemFromdb = async (index) => {
+        const specItem = updatemenuItems[index];
+        await DB.CustomSQL(`DELETE FROM menu_items WHERE food_name = '${specItem}'`);
+
+        const updatedItems = [...updatemenuItems];
+        updatedItems.splice(index, 1);
+        setupdateMenuitem(updatedItems);
+        alert(`${specItem} removed from Database`);
+      }
+
+      /**
+       * Updates menu item details and associated inventory in the database.
+       * 
+       * If the ingredient does not exist in the `inventory_items` table, it inserts a new entry.
+       *
+       * @async
+       * @param {number} index - The index of the menu item being updated.
+       */
+      const updatemenuInvetorydb = async(index) => {
+        for (let i = 0; i &lt; updatemenuItems.length; i++) {
+          if(updateinge[index] === inventoryList[i] ) {
+            DB.CustomSQL(`UPDATE menu_ingredients SET inventory_used = ${updateingeused[index]} WHERE ingredient = '${updateinge[index]}' AND menu_id = (SELECT food_id FROM menu_items WHERE food_name = '${updatemenuItems[index]}')`);
+          } else {
+            DB.CustomSQL(`INSERT INTO menu_ingredients VALUES ((SELECT COALESCE(MAX(ingredient_id), 0) + 1 FROM menu_ingredients),(SELECT food_id FROM menu_items WHERE food_name = '${updatemenuItems[index]}'),'${updateinge[index]}' , ${updateingeused[index]})`);
+            DB.CustomSQL(`INSERT INTO inventory_items VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM inventory_items), '${updateinge[index]}' , 0, 0.00, 'lb')`);
+          }
+        }
+        if(updatemenuamount[index] &amp;&amp; updatemenuamount[index].trim() !== "") {
+          DB.CustomSQL(`UPDATE menu_items SET amount = ${updatemenuamount[index]} WHERE food_name = '${updatemenuItems[index]}'`);
+        }
+        if(updatemenucost[index] &amp;&amp; updatemenucost[index].trim() !== "") {
+          DB.CustomSQL(`UPDATE menu_items SET cost = ${updatemenucost[index]} WHERE food_name = '${updatemenuItems[index]}'`);
+        }
+        const specType = updatemenutype[index];
+        DB.CustomSQL(`UPDATE menu_items SET food_type = '${specType}' WHERE food_name = '${updatemenuItems[index]}'`)
+        alert(`${updatemenuItems[index]} has been updated!`);
+      }
+
+      /**
+       * Renders the Update Menu Items section.
+       * @returns {JSX.Element} The rendered Update Menu Items section.
+       */
+      const renderupdateMenuItems = () => (
+        &lt;div className="manage-employee-container secondary">
+          &lt;h2>Add Items&lt;/h2>
+          &lt;div className="employee-grid">
+            {updatemenuItems.map((label, index) => (
+              &lt;div key={index} className="employee-row">
+                &lt;button className="remove-btn" onClick={() => removemenuitemFromdb(index)}>
+                  ✖
+                &lt;/button>
+                &lt;button onClick={() => updatemenuInvetorydb(index)}>{label}&lt;/button>
+                &lt;input
+                    className="name-input"
+                    value={updateinge[index]}
+                    placeholder="Ingredients"
+                    onChange={(e) => {
+                        const updatedmenuIngre = [...updateinge];
+                        updatedmenuIngre[index] = e.target.value;
+                        setupdateingre(updatedmenuIngre);
+                    }}
+                />
+                &lt;input
+                    className="name-input"
+                    value={updateingeused[index]}
+                    placeholder="Inventory Used"
+                    onChange={(e) => {
+                        const updatedmenuInv = [...updateingeused];
+                        updatedmenuInv[index] = e.target.value;
+                        setupdateingreused(updatedmenuInv);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={updatemenuamount[index]}
+                    placeholder="Amount"
+                    onChange={(e) => {
+                        const updatedmenuAmount = [...updatemenuamount];
+                        updatedmenuAmount[index] = e.target.value;
+                        setupdatemenuamount(updatedmenuAmount);
+                    }}
+                />
+
+                &lt;input
+                    className="name-input"
+                    value={updatemenucost[index]}
+                    placeholder="Cost"
+                    onChange={(e) => {
+                        const updatedmenyuCost = [...updatemenucost];
+                        updatedmenyuCost[index] = e.target.value;
+                        setupdatemenucost(updatedmenyuCost);
+                    }}
+                />
+                &lt;select
+                  className="position-dropdown"
+                  value={updatemenutype[index]}
+                  onChange={(e) => {
+                    const updatedFT = [...updatemenutype];
+                    updatedFT[index] = e.target.value;
+                    setupdatemenutype(updatedFT);
+                  }}
+                >
+                  &lt;option value="entree">entree&lt;/option>
+                  &lt;option value="side">side&lt;/option>
+                  &lt;option value="Appetizer">Appetizer&lt;/option>
+                &lt;/select>
+              &lt;/div>
+            ))}
+          &lt;/div>
+        &lt;/div>
+      );
+
+    return(
+        &lt;div className='manage-inv-container'>
+            &lt;div className='inv-grid'>
+                &lt;div className='list inventory-items'>
+                    &lt;ul>
+                    {inventoryList.map((label, index) => (
+                        &lt;li key={index}>
+                            {inventoryList[index]}
+                        &lt;/li>
+                    ))}
+                    &lt;/ul>
+                &lt;/div>
+            &lt;/div>
+
+            &lt;Popup
+                trigger={&lt;button className="save-btn">Add Items&lt;/button>}
+                modal
+                nested
+            >
+                {(close) => (
+                &lt;div className="popup-content-manager-empl">
+                    {renderAddItem()}
+                    &lt;button className="close-btn-empl" onClick={() => { close();}}>
+                    Close
+                    &lt;/button>
+                &lt;/div>
+                )}
+            &lt;/Popup>
+            &lt;Popup
+                trigger={&lt;button className="save-btn">Update/Remove Items&lt;/button>}
+                modal
+                nested
+            >
+                {(close) => (
+                &lt;div className="popup-content-manager-empl">
+                    {renderUpdateItems()}
+                    &lt;button className="close-btn-empl" onClick={close}>
+                    Close
+                    &lt;/button>
+                &lt;/div>
+                )}
+            &lt;/Popup>
+
+            &lt;Popup
+                trigger={&lt;button className="save-btn">Add Menu Items&lt;/button>}
+                modal
+                nested
+            >
+                {(close) => (
+                &lt;div className="popup-content-manager-empl">
+                    {renderMenuItems()}
+                    &lt;button className="close-btn-empl" onClick={close}>
+                    Close
+                    &lt;/button>
+                &lt;/div>
+                )}
+            &lt;/Popup>
+            &lt;Popup
+                trigger={&lt;button className="save-btn">Update Menu Items&lt;/button>}
+                modal
+                nested
+            >
+                {(close) => (
+                &lt;div className="popup-content-manager-empl">
+                    {renderupdateMenuItems()}
+                    &lt;button className="close-btn-empl" onClick={close}>
+                    Close
+                    &lt;/button>
+                &lt;/div>
+                )}
+            &lt;/Popup>
+        &lt;/div>
+    ); 
+}
+
+export default ManageInventory;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

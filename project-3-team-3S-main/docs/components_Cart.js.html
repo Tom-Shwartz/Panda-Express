@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Cart.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Cart.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+//import OrderClass from '../Classes/Orders.js';
+import React , { useState } from 'react';
+import orderItemList from './OrderItemlist.js';
+import Translator from './Translator.js';
+import PostgresFetcher from '../Classes/PosgresFetcher';
+import Popup from 'reactjs-popup';
+import './CSS/Cart.css'
+
+const DB = new PostgresFetcher();
+//orderlist is list of orders while setorders updates the list dynamically
+var RemoveSoundCue = new Audio('Flick_Switch_04.WAV');
+var ClearSoundCue = new Audio('ClearSound.mp3');
+    ClearSoundCue.volume = 0.3;
+var CheckoutCue = new Audio('Special_Powerup_01.WAV');
+//React.Dispatch&lt;React.SetStateAction&lt;never[]>>
+/**
+ * Sets up and renders the cart menu
+ * @component Cart
+ * @example
+ * &lt;Cart OrderList={orders} mode = "customer" setOrders={setOrders} CurrentLanguage = {CurrentLanguage} />
+ * @param {OrderClass[]} OrderList - list of ordered items
+ * @param {ReactElement} setOrder - Updater function for OrderList
+ * @param {String} CurrentLanguage - Used to tell the translator what the current language is
+ * @param {String} mode - Used to manipulate Translation api usage
+ * @returns {JSX.Element} - Rendered Component
+ */
+function Cart({OrderList , setOrders, CurrentLanguage,mode }) {
+   
+    const [isCheckout,setCheckoutPopup] = useState(false);
+
+
+    //Get total price
+    function getTotal(){
+        let total = 0;
+        for(let i = 0; i &lt; OrderList.length; i++){
+            total += OrderList[i].Price;
+        }
+        total += total * 0.0825;
+        console.log(total);
+        return(parseFloat(total.toFixed(2)));
+    }
+
+    function clearCart(setOrders_){
+        const empty = [];
+        setOrders_(empty);
+        ClearSoundCue.currentTime = 0;
+        ClearSoundCue.play();
+    }
+
+    function Checkout(setOrders_){
+        if(OrderList.length >0){
+            setCheckoutPopup(true)
+            CheckoutCue.currentTime = 0;
+            CheckoutCue.play();
+            console.log(getTotal());
+            DB.SendOrder(OrderList,getTotal());
+            const empty = [];
+            setOrders_(empty);
+        }
+
+    }
+
+    function deleteButton(item){
+        const orderarray = OrderList.filter(OrderList => OrderList.id !== item.id);
+       
+        RemoveSoundCue.currentTime = 0;
+        RemoveSoundCue.play();
+        setOrders(orderarray);
+    }
+
+    let map = new Map();
+
+    for (let i = 0; i &lt; OrderList.length; i++) {
+        const order = OrderList[i];
+        let found = false;
+
+        for (let existingOrder of map.keys()) {
+            if (existingOrder.equals(order)) {
+                map.set(existingOrder, map.get(existingOrder) + 1);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            map.set(order, 1);
+        }
+    }
+
+
+    const orderlist = Array.from(map.keys()).map((item) => (
+        &lt;li key={item.id}>
+            &lt;div className="OrderItem">
+                &lt;span className="listItem">
+                    &lt;Translator  text={item.Type} language={CurrentLanguage} />
+                    &lt;button className="DeleteButton" onClick={() => deleteButton(item)}>Remove&lt;/button>
+                &lt;/span>
+                {orderItemList(item,CurrentLanguage)}
+                &lt;Translator  text="Price" language={CurrentLanguage} />: ${item.Price.toFixed(2)} &lt;br />
+                &lt;Translator  text="Amount" language={CurrentLanguage} />: {map.get(item)}
+            &lt;/div>
+        &lt;/li>
+    ));
+
+    const clearCartButton = (&lt;button className="ClearButton" onClick={() => clearCart(setOrders)}>
+        &lt;Translator  text="Clear" language={CurrentLanguage}/>
+        &lt;/button>);
+    const checkoutButton = (&lt;button className="CheckoutButton" onClick={() => Checkout(setOrders)}>
+        &lt;Translator  text="Checkout" language={CurrentLanguage}/>
+        &lt;/button>);
+   
+
+    return (
+        &lt;>
+            &lt;div className="Cart">
+                &lt;div className="CartList"> {orderlist} &lt;/div>
+                &lt;div className="TotalBar">&lt;Translator  text="Total" language={CurrentLanguage} />: ${getTotal().toFixed(2)}&lt;/div>
+                &lt;div className="ButtonsContainer">
+                    &lt;span className="ClearButton">{clearCartButton}&lt;/span>
+                    &lt;span className="CheckoutButton">{checkoutButton}&lt;/span>
+                &lt;/div>
+            &lt;/div>
+            &lt;Popup open = {isCheckout}
+          modal 
+          closeOnDocumentClick 
+          onClose={() => setCheckoutPopup(false)}>
+            &lt;div className='combo-popup-content'>
+              &lt;h1>Order Confirmed please Pay at front&lt;/h1>
+              &lt;button onClick={() => setCheckoutPopup(false)}> Close &lt;/button>
+            &lt;/div>
+          &lt;/Popup>
+        &lt;/>
+    );
+}
+
+export default Cart;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

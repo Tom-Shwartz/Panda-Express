@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/EmployeeLogin.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/EmployeeLogin.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import PostgresFetcher from '../Classes/PosgresFetcher';
+import './CSS/EmployeeLogin.css';
+
+const DB = new PostgresFetcher();
+
+/**
+ * Verifies the provided email against the database and navigates based on position.
+ * @param {string} email - The email address to check against the database.
+ * @returns {void}
+ */
+async function checkEmail(email) {
+    var data = await DB.CustomSQL(`SELECT * FROM employee_data WHERE email = '${email}'`);
+    if (data.length !== 0) {
+        if (data[0].position === 'Manager') {
+            navigate("/manager");
+        } else {
+            alert("Permission Denied");
+        }
+    } else {
+        alert("Unverified User");
+    }
+}
+
+/**
+ * Callback function for handling Google Sign-In responses.
+ * Decodes the JWT response and verifies the user's email, then checks the database.
+ * @param {Object} response - The response object containing the JWT credential.
+ * @returns {void}
+ */
+function handleCallbackResponse(response) {
+    var user_things = jwtDecode(response.credential);
+    console.log(user_things.email);
+    if (user_things.email_verified === true) {
+        checkEmail(user_things.email);
+    }
+}
+
+/**
+ * EmployeeLogin component for handling PIN-based and Google account-based login.
+ * Includes interactive PIN pad, Google sign-in button, and navigation logic.
+ * @returns {JSX.Element} - The rendered EmployeeLogin component.
+ */
+function EmployeeLogin() {
+    useEffect(() => {
+        // Initialize Google Sign-In
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "897318928375-aks2c1bnh2kbbmgca9l55ms0rhfkdr12.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("GoogleSignIn"),
+            { theme: "filled_black", size: "large", shape: "pill" }
+        );
+    }, []);
+
+    const employeePasswords = ["8594", "4543", "9854", "2373", "8031", "5783", "6560", "1205", "9923", "4189"];
+    const [pin, setPin] = useState("");
+    const navigate = useNavigate();
+
+    /**
+     * Adds a number to the PIN, ensuring it does not exceed 4 digits.
+     * @param {string} number - The number to add to the PIN.
+     * @returns {void}
+     */
+    const addToPin = (number) => {
+        if (pin.length &lt; 4) {
+            setPin((prevPin) => prevPin + number);
+        }
+    };
+
+    /**
+     * Removes the last digit from the PIN if it exists.
+     * @returns {void}
+     */
+    const removeFromPin = () => {
+        if (pin.length > 0) {
+            setPin((prevPin) => prevPin.substring(0, prevPin.length - 1));
+        }
+    };
+
+    /**
+     * Verifies the entered PIN against a list of valid employee passwords.
+     * Navigates to the cashier screen if valid, otherwise alerts the user.
+     * @returns {void}
+     */
+    const verifyPassword = () => {
+        if (employeePasswords.includes(pin)) {
+            navigate("/cashier");
+        } else {
+            alert("Incorrect PIN. Please try again.");
+        }
+        setPin("");
+    };
+
+    /**
+     * Navigates back to the home screen.
+     * @returns {void}
+     */
+    const backButton = () => {
+        navigate("/");
+    };
+
+    return (
+        &lt;main>
+            &lt;div className="container">
+                &lt;div className='Manager_Button'>
+                    &lt;div className="google_description">Manager Login:&lt;/div>
+                    &lt;div className="google_button" id="GoogleSignIn">&lt;/div>
+                &lt;/div>
+                &lt;div className="vertical-center">
+                    &lt;div className="pin-display">
+                        &lt;p className="header">Enter PIN:&lt;/p>
+                        &lt;input type="text" value={pin} readOnly className="pin-output" />
+                    &lt;/div>
+                    {/* PIN pad buttons */}
+                    &lt;div className="btn-group" style={{ width: '50%' }}>
+                        &lt;button onClick={() => addToPin("1")} style={{ width: '33.3%' }}>1&lt;/button>
+                        &lt;button onClick={() => addToPin("2")} style={{ width: '33.3%' }}>2&lt;/button>
+                        &lt;button onClick={() => addToPin("3")} style={{ width: '33.3%' }}>3&lt;/button>
+                    &lt;/div>
+                    &lt;div className="btn-group" style={{ width: '50%' }}>
+                        &lt;button onClick={() => addToPin("4")} style={{ width: '33.3%' }}>4&lt;/button>
+                        &lt;button onClick={() => addToPin("5")} style={{ width: '33.3%' }}>5&lt;/button>
+                        &lt;button onClick={() => addToPin("6")} style={{ width: '33.3%' }}>6&lt;/button>
+                    &lt;/div>
+                    &lt;div className="btn-group" style={{ width: '50%' }}>
+                        &lt;button onClick={() => addToPin("7")} style={{ width: '33.3%' }}>7&lt;/button>
+                        &lt;button onClick={() => addToPin("8")} style={{ width: '33.3%' }}>8&lt;/button>
+                        &lt;button onClick={() => addToPin("9")} style={{ width: '33.3%' }}>9&lt;/button>
+                    &lt;/div>
+                    &lt;div className="btn-group" style={{ width: '50%' }}>
+                        &lt;button onClick={() => verifyPassword()} style={{ width: '33.3%' }}>Sign In&lt;/button>
+                        &lt;button onClick={() => addToPin("0")} style={{ width: '33.3%' }}>0&lt;/button>
+                        &lt;button onClick={() => removeFromPin()} style={{ width: '33.3%' }}>Backspace&lt;/button>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div className="back-button">
+                    &lt;button onClick={() => backButton()}>&amp;larr;&lt;/button>
+                &lt;/div>
+            &lt;/div>
+        &lt;/main>
+    );
+}
+
+export default EmployeeLogin;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="APIFetcher.html">APIFetcher</a></li><li><a href="OrderClass.html">OrderClass</a></li><li><a href="PostgresFetcher.html">PostgresFetcher</a></li></ul><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#Cart">Cart</a></li><li><a href="global.html#CashierCheckout">CashierCheckout</a></li><li><a href="global.html#CashierInterface">CashierInterface</a></li><li><a href="global.html#Combos">Combos</a></li><li><a href="global.html#CustomSQL">CustomSQL</a></li><li><a href="global.html#EmployeeLogin">EmployeeLogin</a></li><li><a href="global.html#Entrees">Entrees</a></li><li><a href="global.html#Extras">Extras</a></li><li><a href="global.html#GetAllRows">GetAllRows</a></li><li><a href="global.html#GetCertainRows">GetCertainRows</a></li><li><a href="global.html#GetColumn">GetColumn</a></li><li><a href="global.html#LanguagePopup">LanguagePopup</a></li><li><a href="global.html#LineChart">LineChart</a></li><li><a href="global.html#ManageEmployee">ManageEmployee</a></li><li><a href="global.html#ManageInventory">ManageInventory</a></li><li><a href="global.html#ManageSales">ManageSales</a></li><li><a href="global.html#ManagerInterface">ManagerInterface</a></li><li><a href="global.html#MusicPlayer">MusicPlayer</a></li><li><a href="global.html#OrderMenu">OrderMenu</a></li><li><a href="global.html#Orders">Orders</a></li><li><a href="global.html#PaymentTerminal">PaymentTerminal</a></li><li><a href="global.html#PricingMenu">PricingMenu</a></li><li><a href="global.html#Reports">Reports</a></li><li><a href="global.html#SendCombo">SendCombo</a></li><li><a href="global.html#SendOrder">SendOrder</a></li><li><a href="global.html#Sides">Sides</a></li><li><a href="global.html#StartScreen">StartScreen</a></li><li><a href="global.html#Translator">Translator</a></li><li><a href="global.html#checkEmail">checkEmail</a></li><li><a href="global.html#checkItemAvailability">checkItemAvailability</a></li><li><a href="global.html#checkOrderAvailable">checkOrderAvailable</a></li><li><a href="global.html#handleCallbackResponse">handleCallbackResponse</a></li><li><a href="global.html#orderItemList">orderItemList</a></li><li><a href="global.html#removeitemFrom">removeitemFrom</a></li><li><a href="global.html#removeitemFromdb">removeitemFromdb</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Dec 11 2024 18:04:23 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

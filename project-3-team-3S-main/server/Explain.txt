@@ -1,0 +1,698 @@
+initialize:
+cd server
+npm init
+npm install express --save
+
+Run the server with: "node index.js" it will run on port 8080
+
+Basic call to server:
+fetch("http://localhost:8080/api/test/echo/hello_world")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error("Error:", error));
+
+This will echo the string after echo/
+
+The two useful calls:
+
+'/api/db/request/:table':
+    will pull all data from the table
+    Example usage: '/api/db/request/prepped_food'
+    outputs: Json
+    Example output:
+    {
+    "output": {
+        "command": "SELECT",
+        "rowCount": 18,
+        "oid": null,
+        "rows": [
+            {
+                "food_name": "Teriyaki Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Sugar",
+                    "Sesame oil",
+                    "Soy Sauce",
+                    "Soybean Oil"
+                ],
+                "cost": "4.29",
+                "inventory_used": [
+                    4,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                "amount": 41
+            },
+            {
+                "food_name": "Broccoli Beef",
+                "ingredients": [
+                    "Broccoli",
+                    "Beef",
+                    "Soybean Oil",
+                    "Garlic",
+                    "Potato Starch",
+                    "Soy Sauce",
+                    "Salt",
+                    "Sesame Oil",
+                    "Yeast",
+                    "Sugar"
+                ],
+                "cost": "23.11",
+                "inventory_used": [
+                    2,
+                    3,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    1
+                ],
+                "amount": 36
+            },
+            {
+                "food_name": "Kung Pao Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Zucchini",
+                    "Red Bell pepper",
+                    "Roasted Peanuts",
+                    "Soybean Oil",
+                    "Green Onion",
+                    "Garlic",
+                    "Potato Starch",
+                    "Salt",
+                    "Sesame Oil",
+                    "Sugar",
+                    "Soy Sauce"
+                ],
+                "cost": "19.98",
+                "inventory_used": [
+                    3,
+                    2,
+                    2,
+                    2,
+                    1,
+                    2,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "amount": 41
+            },
+            {
+                "food_name": "Sushi",
+                "ingredients": [
+                    "White Rice",
+                    "Fish"
+                ],
+                "cost": "14.0",
+                "inventory_used": [
+                    3,
+                    1
+                ],
+                "amount": 500
+            },
+            {
+                "food_name": "White Rice",
+                "ingredients": [
+                    "White Rice"
+                ],
+                "cost": "0.88",
+                "inventory_used": [
+                    1
+                ],
+                "amount": 5
+            },
+            {
+                "food_name": "Original Orange Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Sugar",
+                    "Distilled Vinegar",
+                    "Potato Starch",
+                    "Salt",
+                    "Garlic",
+                    "Sesame Oil",
+                    "Eggs",
+                    "Soy Sauce"
+                ],
+                "cost": "15.43",
+                "inventory_used": [
+                    2,
+                    1,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                "amount": 49
+            },
+            {
+                "food_name": "String Bean Chicken Breast",
+                "ingredients": [
+                    "Onion",
+                    "Chicken",
+                    "Soybean Oil",
+                    "Garlic",
+                    "Sugar",
+                    "Salt",
+                    "Potato Starch",
+                    "Sesame Oil"
+                ],
+                "cost": "13.13",
+                "inventory_used": [
+                    1,
+                    3,
+                    1,
+                    2,
+                    2,
+                    2,
+                    2,
+                    1
+                ],
+                "amount": 54
+            },
+            {
+                "food_name": "Bourbon Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Bourbon Sauce",
+                    "Yellow Bell Pepper",
+                    "Red bell pepper",
+                    "Salt"
+                ],
+                "cost": "5.5",
+                "inventory_used": [
+                    1,
+                    2,
+                    3,
+                    3,
+                    2
+                ],
+                "amount": 36
+            },
+            {
+                "food_name": "Chow Mein",
+                "ingredients": [
+                    "Cabbage",
+                    "Wheat Flour",
+                    "Onion",
+                    "Soybean Oil",
+                    "Celery",
+                    "Sesame Oil",
+                    "Canola Oil",
+                    "Sugar",
+                    "Salt",
+                    "Chow Mein Sauce"
+                ],
+                "cost": "6.2",
+                "inventory_used": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "amount": 95
+            },
+            {
+                "food_name": "SweetFire Chicken Breast",
+                "ingredients": [
+                    "Chicken",
+                    "Pinneaple",
+                    "Red Bell pepper",
+                    "Sugar",
+                    "Onion",
+                    "Soybean Oil",
+                    "Red Jalapenos",
+                    "Distilled Vinegar",
+                    "Wheat Flour"
+                ],
+                "cost": "11.41",
+                "inventory_used": [
+                    3,
+                    2,
+                    1,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1,
+                    2
+                ],
+                "amount": 35
+            },
+            {
+                "food_name": "Honey Sesame Chicken Breast",
+                "ingredients": [
+                    "Chicken",
+                    "Yellow Bell Pepper",
+                    "Distilled Vinegar",
+                    "Garlic",
+                    "Sesame Oil",
+                    "Sugar",
+                    "Salt"
+                ],
+                "cost": "10.29",
+                "inventory_used": [
+                    3,
+                    2,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1
+                ],
+                "amount": 21
+            },
+            {
+                "food_name": "Black Pepper Sirloin Steak",
+                "ingredients": [
+                    "Black Pepper Powder",
+                    "Black Pepper Sirloin Steak Corn Starch",
+                    "Onion",
+                    "mushrooms",
+                    "Red Bell pepper",
+                    "Soybean Oil",
+                    "tomato paste",
+                    "Soy Sauce Powder",
+                    "Soy Sauce",
+                    "miso paste",
+                    "Baby Broccoli",
+                    "Sirloin Steak"
+                ],
+                "cost": "21.44",
+                "inventory_used": [
+                    2,
+                    2,
+                    3,
+                    3,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    3,
+                    3
+                ],
+                "amount": 9
+            },
+            {
+                "food_name": "Beijing Beef",
+                "ingredients": [
+                    "Beef",
+                    "Sugar",
+                    "Red Bell pepper",
+                    "Onion",
+                    "Soybean Oil",
+                    "Distilled Vinegar",
+                    "Salt",
+                    "Garlic",
+                    "Tomato Paste",
+                    "Rice Flour",
+                    "Wheat Flour",
+                    "Yeast",
+                    "Bejing Beef Food Starch"
+                ],
+                "cost": "20.14",
+                "inventory_used": [
+                    3,
+                    1,
+                    2,
+                    2,
+                    1,
+                    1,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1,
+                    2
+                ],
+                "amount": 13
+            },
+            {
+                "food_name": "Honey Walnut Shrimp",
+                "ingredients": [
+                    "Shrimp",
+                    "Soybean Oil",
+                    "Rice Flour",
+                    "Glazed Walnuts",
+                    "Sugar",
+                    "Evaporated Milk",
+                    "Salt",
+                    "Distilled Vinegar",
+                    "Eggs",
+                    "Yeast",
+                    "Garlic"
+                ],
+                "cost": "25.44",
+                "inventory_used": [
+                    3,
+                    1,
+                    2,
+                    2,
+                    1,
+                    2,
+                    1,
+                    1,
+                    2,
+                    1,
+                    2
+                ],
+                "amount": 54
+            },
+            {
+                "food_name": "Mushroom Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Mushrooms",
+                    "Zucchini",
+                    "Soybean oil",
+                    "Garlic",
+                    "Sugar",
+                    "Soy Sauce",
+                    "Sesame Oil",
+                    "Salt"
+                ],
+                "cost": "14.06",
+                "inventory_used": [
+                    3,
+                    2,
+                    2,
+                    1,
+                    2,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "amount": 38
+            },
+            {
+                "food_name": "Fried Rice",
+                "ingredients": [
+                    "White Rice",
+                    "Eggs",
+                    "Peas",
+                    "Carrots",
+                    "Soybean Oil",
+                    "Green Onion",
+                    "Salt",
+                    "Sesame Oil",
+                    "Sugar",
+                    "Celery"
+                ],
+                "cost": "10.22",
+                "inventory_used": [
+                    2,
+                    4,
+                    2,
+                    2,
+                    1,
+                    2,
+                    2,
+                    1,
+                    2,
+                    2
+                ],
+                "amount": 97
+            },
+            {
+                "food_name": "Black Pepper Chicken",
+                "ingredients": [
+                    "Chicken",
+                    "Celery",
+                    "Onion",
+                    "Soybean Oil",
+                    "Garlic",
+                    "Potato Starch",
+                    "Sesame Oil",
+                    "Salt",
+                    "Black Pepper Chicken Sauce"
+                ],
+                "cost": "12.64",
+                "inventory_used": [
+                    4,
+                    2,
+                    2,
+                    1,
+                    1,
+                    2,
+                    1,
+                    2,
+                    3
+                ],
+                "amount": 57
+            },
+            {
+                "food_name": "Super Greens",
+                "ingredients": [
+                    "Cabbage",
+                    "Broccoli",
+                    "Kale",
+                    "Soybean Oil",
+                    "Garlic",
+                    "Salt",
+                    "Soy Sauce Powder",
+                    "Sugar",
+                    "Celery"
+                ],
+                "cost": "11.17",
+                "inventory_used": [
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2
+                ],
+                "amount": 43
+            }
+        ],
+        "fields": [
+            {
+                "name": "food_name",
+                "tableID": 90550,
+                "columnID": 1,
+                "dataTypeID": 1043,
+                "dataTypeSize": -1,
+                "dataTypeModifier": -1,
+                "format": "text"
+            },
+            {
+                "name": "ingredients",
+                "tableID": 90550,
+                "columnID": 2,
+                "dataTypeID": 1009,
+                "dataTypeSize": -1,
+                "dataTypeModifier": -1,
+                "format": "text"
+            },
+            {
+                "name": "cost",
+                "tableID": 90550,
+                "columnID": 3,
+                "dataTypeID": 1700,
+                "dataTypeSize": -1,
+                "dataTypeModifier": -1,
+                "format": "text"
+            },
+            {
+                "name": "inventory_used",
+                "tableID": 90550,
+                "columnID": 4,
+                "dataTypeID": 1007,
+                "dataTypeSize": -1,
+                "dataTypeModifier": -1,
+                "format": "text"
+            },
+            {
+                "name": "amount",
+                "tableID": 90550,
+                "columnID": 5,
+                "dataTypeID": 23,
+                "dataTypeSize": 4,
+                "dataTypeModifier": -1,
+                "format": "text"
+            }
+        ],
+        "_parsers": [
+            null,
+            null,
+            null,
+            null,
+            null
+        ],
+        "_types": {
+            "_types": {
+                "arrayParser": {},
+                "builtins": {
+                    "BOOL": 16,
+                    "BYTEA": 17,
+                    "CHAR": 18,
+                    "INT8": 20,
+                    "INT2": 21,
+                    "INT4": 23,
+                    "REGPROC": 24,
+                    "TEXT": 25,
+                    "OID": 26,
+                    "TID": 27,
+                    "XID": 28,
+                    "CID": 29,
+                    "JSON": 114,
+                    "XML": 142,
+                    "PG_NODE_TREE": 194,
+                    "SMGR": 210,
+                    "PATH": 602,
+                    "POLYGON": 604,
+                    "CIDR": 650,
+                    "FLOAT4": 700,
+                    "FLOAT8": 701,
+                    "ABSTIME": 702,
+                    "RELTIME": 703,
+                    "TINTERVAL": 704,
+                    "CIRCLE": 718,
+                    "MACADDR8": 774,
+                    "MONEY": 790,
+                    "MACADDR": 829,
+                    "INET": 869,
+                    "ACLITEM": 1033,
+                    "BPCHAR": 1042,
+                    "VARCHAR": 1043,
+                    "DATE": 1082,
+                    "TIME": 1083,
+                    "TIMESTAMP": 1114,
+                    "TIMESTAMPTZ": 1184,
+                    "INTERVAL": 1186,
+                    "TIMETZ": 1266,
+                    "BIT": 1560,
+                    "VARBIT": 1562,
+                    "NUMERIC": 1700,
+                    "REFCURSOR": 1790,
+                    "REGPROCEDURE": 2202,
+                    "REGOPER": 2203,
+                    "REGOPERATOR": 2204,
+                    "REGCLASS": 2205,
+                    "REGTYPE": 2206,
+                    "UUID": 2950,
+                    "TXID_SNAPSHOT": 2970,
+                    "PG_LSN": 3220,
+                    "PG_NDISTINCT": 3361,
+                    "PG_DEPENDENCIES": 3402,
+                    "TSVECTOR": 3614,
+                    "TSQUERY": 3615,
+                    "GTSVECTOR": 3642,
+                    "REGCONFIG": 3734,
+                    "REGDICTIONARY": 3769,
+                    "JSONB": 3802,
+                    "REGNAMESPACE": 4089,
+                    "REGROLE": 4096
+                }
+            },
+            "text": {},
+            "binary": {}
+        },
+        "RowCtor": null,
+        "rowAsArray": false,
+        "_prebuiltEmptyResultObject": {
+            "food_name": null,
+            "ingredients": null,
+            "cost": null,
+            "inventory_used": null,
+            "amount": null
+        }
+    }
+}
+
+'/api/db/request/:table/:column':
+    Used to get all data regarding a specific column
+    Example usage: /api/db/request/prepped_food/food_name
+    Output: Json
+    Example Output:
+    {
+    "output": {
+        "food_name": [
+            {
+                "food_name": "Teriyaki Chicken"
+            },
+            {
+                "food_name": "Broccoli Beef"
+            },
+            {
+                "food_name": "Kung Pao Chicken"
+            },
+            {
+                "food_name": "Sushi"
+            },
+            {
+                "food_name": "White Rice"
+            },
+            {
+                "food_name": "Original Orange Chicken"
+            },
+            {
+                "food_name": "String Bean Chicken Breast"
+            },
+            {
+                "food_name": "Bourbon Chicken"
+            },
+            {
+                "food_name": "Chow Mein"
+            },
+            {
+                "food_name": "SweetFire Chicken Breast"
+            },
+            {
+                "food_name": "Honey Sesame Chicken Breast"
+            },
+            {
+                "food_name": "Black Pepper Sirloin Steak"
+            },
+            {
+                "food_name": "Beijing Beef"
+            },
+            {
+                "food_name": "Honey Walnut Shrimp"
+            },
+            {
+                "food_name": "Mushroom Chicken"
+            },
+            {
+                "food_name": "Fried Rice"
+            },
+            {
+                "food_name": "Black Pepper Chicken"
+            },
+            {
+                "food_name": "Super Greens"
+            }
+        ]
+    }
+}

@@ -1,0 +1,105 @@
+.ReportContents {
+    background-color: red;
+    display: flex;
+    height: 92vh;
+    overflow: visible;
+    gap: 30vw;
+    padding:30px;
+    flex-direction: row;
+}
+
+.XreportContents {
+    background-color: none;
+    max-height: 80vh;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10vh;
+    margin-left: 15vw;
+}
+
+.Xreport-List {
+    background-color: black;
+    width: 20vw;
+    justify-content: center;
+    text-align: center;
+    border: 5px  white;
+    border-style:ridge;
+    border-radius: 15px;
+    padding: 50px;
+    overflow-y: scroll;
+    scrollbar-width: 0vw;
+    height: 50vh;
+}
+.Xreport-List-items{
+    margin-bottom: 2vh;
+}
+
+
+.Xreport-List-header{
+    margin-bottom: 2vh;
+    background-color: red;
+    font-weight: 900;
+    padding: 5px;
+    width: 300px;
+      border: 5px solid white; 
+      border-radius: 15px; 
+
+    width: auto;
+}
+.Xreport-Button {
+    background-color: black;
+    color: white;
+    width: 30%;
+    border: 5px solid white;
+    border-radius: 15px;
+    height: 10%;
+    margin-left: 35%;
+    margin-bottom: 10%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.Xreport-Button:hover {
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+.Zreport-list{
+    background-color: black;
+    width: 10vw;
+    justify-content: center;
+    text-align: center;
+    border: 5px ridge white;
+    border-radius: 15px;
+    padding: 50px;
+    scrollbar-width: 0vw;
+    height: 50vh;
+    gap: 30px;
+    display: block;
+}
+
+.ZreportContents {
+    background-color: none;
+}
+
+.Zreport-Button {
+    background-color: black;
+    color: white;
+    width: 30%;
+    border: 5px solid white;
+    border-radius: 15px;
+    height: 10%;
+    margin-left: 35%;
+    margin-bottom: 10%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.Zreport-Button:hover {
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+.Zreport-List-items{
+    margin-bottom: 20%;
+}

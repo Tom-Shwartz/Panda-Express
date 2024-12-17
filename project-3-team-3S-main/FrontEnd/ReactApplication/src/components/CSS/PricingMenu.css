@@ -1,0 +1,124 @@
+.PricingContent{
+    background-color: red;
+    width: 75vw;
+    height: 80vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;    
+    flex-direction: row;
+    border:10px,ridge,black;
+    box-shadow: 5px 5px 5px ;
+    gap: 0vw;
+}
+
+
+.PricingListContainer{
+    width: 25vw;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+}
+.PricingItemsList{
+    width: 20vw;
+    background-color: none;
+}
+.PricingHeadContainer{
+    background-color: black;
+    color: white;
+    width: 10vw;   
+    margin-bottom: 5vh;
+    margin-left: 3vw;
+    font-size: x-large;
+    border:5px,ridge,black;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.PricingRow{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    width: 15vw;
+    border: 5px, solid,black;
+    border-radius: 3px;
+    gap: 5vw;
+    
+}
+.PricingRow:hover{
+    border: 10px, solid,grey;
+    border-radius: 3px;
+}
+.PricingRow:active{
+    background-color: red;
+    color: white;
+}
+
+.MenuPrices{
+    background-color: none;
+    
+}
+
+.MenuNames{
+    width: 50%;
+}
+
+.PricingSelectedItem {
+    background-color: white;
+    width: 100%;
+    margin-bottom: 3vh;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.PricesFields{
+    margin-bottom: 2vh;
+    background-color: white;
+    border-radius: 3px;
+}
+
+
+.NewPriceContainer{
+    width: 25vw;
+    background-color: none;
+    justify-content: center;
+    align-items: center;   
+}
+
+
+.Pricing-numpad{
+    background-color: none;
+    width: 25vw;
+    height: 40vh;
+    margin-left: 0%;
+}
+.numpad-group button{
+    width: 33%;
+    height: 7vh;
+    margin: 0px;
+    background-color: white;
+    font-weight: 1000;
+    border: 2px,solid,black;
+    border-radius: 10px
+}
+.numpad-group button:hover{
+    background-color: grey;
+    border: 2px,solid,white;
+}
+
+
+.Confirm-Price{
+    background-color: white;
+    margin-top: 3vh;
+    width:66%;
+    font-size: large;
+    font-weight: 900;
+    height: 10vh;
+    border: 2px,solid,black;
+    border-radius: 10px
+}
+
+.Confirm-Price:hover{
+    border: 2px,solid,white;
+    background-color: grey;
+    border-radius: 10px 
+}

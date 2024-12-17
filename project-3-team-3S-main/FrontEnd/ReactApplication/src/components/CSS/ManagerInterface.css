@@ -1,0 +1,26 @@
+.manager-interface {
+  background-color: white;
+  color: white;
+}
+.navibar {
+  background-color: black;
+  color: white;
+  height: 6vh;
+}
+
+.navibar button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 1vh;
+  cursor: pointer;
+}
+
+.navibar button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+  border-style: solid;
+  border-width: 2px;
+}

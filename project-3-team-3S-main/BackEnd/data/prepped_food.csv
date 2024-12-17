@@ -1,0 +1,17 @@
+Food_name,ingredients,cost - cost to make,inventory_used,amount
+Chow Mein,"{Cabbage, Wheat Flour, Onion, Soybean Oil, Celery, Sesame Oil, Canola Oil, Sugar, Salt, Chow Mein Sauce}",6.2,"{1,1,1,1,2,1,1,1,1,1}",4
+Fried Rice,"{White Rice, Eggs, Peas, Carrots, Soybean Oil,  Green Onion, Salt, Sesame Oil, Sugar, Celery}",10.22,"{2,4,2,2,1,2,2,1,2,2}",14
+White Rice,{White Rice},0.88,{1},20
+Super Greens,"{Cabbage, Broccoli, Kale, Soybean Oil, Garlic, Salt, Soy Sauce Powder, Sugar, Celery}",11.17,"{2,1,2,1,2,1,2,1,2}",64
+Original Orange Chicken,"{Chicken, Sugar, Distilled Vinegar, Potato Starch, Salt, Garlic, Sesame Oil, Eggs, Soy Sauce, Sugar}",15.34,"{2,1,1,2,1,2,1,2,1,1}",17
+Black Pepper Sirloin Steak,"{Black Pepper Powder, Black Pepper Sirloin Steak Corn Starch,Onion, mushrooms, Red Bell pepper, Soybean Oil, tomato paste, Soy Sauce Powder, Soy Sauce, miso paste, Baby Broccoli, Sirloin Steak}",21.44,"{2,2,3,3,2,1,1,1,1,1,3,3}",13
+Honey Walnut Shrimp,"{Shrimp, Soybean Oil, Rice Flour, Glazed Walnuts, Sugar, Evaporated Milk, Salt, Distilled Vinegar, Eggs, Yeast, Garlic}",25.44,"{3,1,2,2,1,2,1,1,2,1,2}",63
+Teriyaki Chicken,"{Chicken, Sugar, Sesame oil, Soy Sauce, Soybean Oil}",4.29,"{4,2,1,2,1}",41
+Broccoli Beef,"{Broccoli, Beef, Soybean Oil, Garlic, Potato Starch, Soy Sauce, Salt, Sesame Oil, Yeast, Sugar}",23.11,"{2,3,1,2,1,1,1,1,2,1}",36
+Kung Pao Chicken,"{Chicken, Zucchini, Red Bell pepper, Roasted Peanuts, Soybean Oil, Green Onion, Garlic, Potato Starch, Salt, Sesame Oil, Sugar, Soy Sauce}",19.98,"{3,2,2,2,1,2,2,1,1,1,1,1}",44
+Honey Sesame Chicken Breast,"{Chicken, Yellow Bell Pepper, Distilled Vinegar, Garlic, Sesame Oil, Sugar, Salt}",10.29,"{3,2,1,2,1,1,1}",24
+Beijing Beef,"{Beef, Sugar, Red Bell pepper, Onion, Soybean Oil, Distilled Vinegar, Salt, Garlic, Tomato Paste, Rice Flour, Wheat Flour, Yeast, Bejing Beef Food Starch}",20.14,"{3,1,2,2,1,1,1,2,1,1,1,1,2}",17
+Mushroom Chicken,"{Chicken, Mushrooms, Zucchini, Soybean oil, Garlic, Sugar, Soy Sauce, Sesame Oil, Salt}",14.06,"{3,2,2,1,2,1,1,1,1}",42
+SweetFire Chicken Breast,"{Chicken, Pinneaple, Red Bell pepper, Sugar, Onion, Soybean Oil, Red Jalapenos, Distilled Vinegar, Wheat Flour}",11.41,"{3,2,1,1,2,1,1,1,2}",44
+String Bean Chicken Breast,"{Onion, Chicken, Soybean Oil, Garlic, Sugar, Salt, Potato Starch, Sesame Oil}",13.13,"{1,3,1,2,2,2,2,1}",55
+Black Pepper Chicken,"{Chicken, Celery, Onion, Soybean Oil, Garlic, Potato Starch, Sesame Oil, Salt, Black Pepper Chicken Sauce}",12.64,"{4,2,2,1,1,2,1,2}",59

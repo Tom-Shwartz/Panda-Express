@@ -1,0 +1,58 @@
+
+.ManagerOrder-Content {
+    background-color: red;
+    height: 100vh;
+    display: flex;
+    gap: 5vw;
+}
+
+/*****Order per time frame Chart css************************************/
+.Orders-Chart-Container{
+    width: 40vw;
+    height: 40vh;
+    background-color: aliceblue;
+    justify-content: center;
+    align-items: center;
+    border: 10px, solid, black;
+    margin-top: 15vh;
+    margin-left:15vh;
+    border-radius: 10px;
+} 
+
+.SalesChart{
+    border: 20px,20px,20px, black;
+    border-radius: 10px;
+}
+
+
+
+
+/*****Order list css************************************/
+.Order-History-Container {
+    margin: 10vh;
+    background-color: black;
+    width: 30vw;
+    justify-content: left;
+    align-items: left;
+    padding: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior:auto;
+    border-radius: 10px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: white;
+}
+.orderlist-row{
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+}
+
+.Orderlist-title{
+    margin-left: 35%;
+}
+
+li {
+    list-style: none;
+}

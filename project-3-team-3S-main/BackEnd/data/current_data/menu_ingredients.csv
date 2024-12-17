@@ -1,0 +1,152 @@
+ingredient_id,food_id,ingredient,inventory_used
+43,1,White Rice,3
+44,1,Fish,1
+45,2,Chicken,3
+46,2,Mushrooms,2
+47,2,Zucchini,2
+48,2,Soybean oil,1
+49,2,Garlic,2
+50,2,Sugar,1
+51,2,Soy Sauce,1
+52,2,Sesame Oil,1
+53,2,Salt,1
+54,3,White Rice,1
+55,4,Chicken,3
+56,4,Zucchini,2
+57,4,Red Bell pepper,2
+58,4,Roasted Peanuts,2
+59,4,Soybean Oil,1
+60,4,Green Onion,2
+61,4,Garlic,2
+62,4,Potato Starch,1
+63,4,Salt,1
+64,4,Sesame Oil,1
+65,4,Sugar,1
+66,4,Soy Sauce,1
+67,5,Chicken,2
+68,5,Sugar,1
+69,5,Distilled Vinegar,1
+70,5,Potato Starch,2
+71,5,Salt,1
+72,5,Garlic,2
+73,5,Sesame Oil,1
+74,5,Eggs,2
+75,5,Soy Sauce,1
+76,6,Chicken,4
+77,6,Celery,2
+78,6,Onion,2
+79,6,Soybean Oil,1
+80,6,Garlic,1
+81,6,Potato Starch,2
+82,6,Sesame Oil,1
+83,6,Salt,2
+84,6,Black Pepper Chicken Sauce,3
+85,7,Broccoli,2
+86,7,Beef,3
+87,7,Soybean Oil,1
+88,7,Garlic,2
+89,7,Potato Starch,1
+90,7,Soy Sauce,1
+91,7,Salt,1
+92,7,Sesame Oil,1
+93,7,Yeast,2
+94,7,Sugar,1
+95,8,White Rice,2
+96,8,Eggs,4
+97,8,Peas,2
+98,8,Carrots,2
+99,8,Soybean Oil,1
+100,8,Green Onion,2
+101,8,Salt,2
+102,8,Sesame Oil,1
+103,8,Sugar,2
+104,8,Celery,2
+105,9,Black Pepper Powder,2
+106,9,Black Pepper Sirloin Steak Corn Starch,2
+107,9,Onion,3
+108,9,mushrooms,3
+109,9,Red Bell pepper,2
+110,9,Soybean Oil,1
+111,9,tomato paste,1
+112,9,Soy Sauce Powder,1
+113,9,Soy Sauce,1
+114,9,miso paste,1
+115,9,Baby Broccoli,3
+116,9,Sirloin Steak,3
+117,10,Shrimp,3
+118,10,Soybean Oil,1
+119,10,Rice Flour,2
+120,10,Glazed Walnuts,2
+121,10,Sugar,1
+122,10,Evaporated Milk,2
+123,10,Salt,1
+124,10,Distilled Vinegar,1
+125,10,Eggs,2
+126,10,Yeast,1
+127,10,Garlic,2
+128,11,Chicken,3
+129,11,Pinneaple,2
+130,11,Red Bell pepper,1
+131,11,Sugar,1
+132,11,Onion,2
+133,11,Soybean Oil,1
+134,11,Red Jalapenos,1
+135,11,Distilled Vinegar,1
+136,11,Wheat Flour,2
+137,12,Beef,3
+138,12,Sugar,1
+139,12,Red Bell pepper,2
+140,12,Onion,2
+141,12,Soybean Oil,1
+142,12,Distilled Vinegar,1
+143,12,Salt,1
+144,12,Garlic,2
+145,12,Tomato Paste,1
+146,12,Rice Flour,1
+147,12,Wheat Flour,1
+148,12,Yeast,1
+149,12,Bejing Beef Food Starch,2
+150,13,Chicken,1
+151,13,Bourbon Sauce,2
+152,13,Yellow Bell Pepper,3
+153,13,Red bell pepper,3
+154,13,Salt,2
+155,14,Onion,1
+156,14,Chicken,3
+157,14,Soybean Oil,1
+158,14,Garlic,2
+159,14,Sugar,2
+160,14,Salt,2
+161,14,Potato Starch,2
+162,14,Sesame Oil,1
+163,15,Chicken,3
+164,15,Yellow Bell Pepper,2
+165,15,Distilled Vinegar,1
+166,15,Garlic,2
+167,15,Sesame Oil,1
+168,15,Sugar,1
+169,15,Salt,1
+170,16,Cabbage,2
+171,16,Broccoli,1
+172,16,Kale,2
+173,16,Soybean Oil,1
+174,16,Garlic,2
+175,16,Salt,1
+176,16,Soy Sauce Powder,2
+177,16,Sugar,1
+178,16,Celery,2
+179,17,Chicken,4
+180,17,Sugar,2
+181,17,Sesame oil,1
+182,17,Soy Sauce,2
+183,17,Soybean Oil,1
+184,18,Cabbage,1
+185,18,Wheat Flour,1
+186,18,Onion,1
+187,18,Soybean Oil,1
+188,18,Celery,2
+189,18,Sesame Oil,1
+190,18,Canola Oil,1
+191,18,Sugar,1
+192,18,Salt,1
+193,18,Chow Mein Sauce,1

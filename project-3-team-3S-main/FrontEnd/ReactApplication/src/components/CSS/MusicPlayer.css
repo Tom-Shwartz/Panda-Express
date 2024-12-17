@@ -1,0 +1,82 @@
+.audioplayer {
+    background-color: #fa2020;
+    position: fixed;
+    top: 1vh;
+    opacity: .3;
+    left: 45vw;
+    z-index: 300;
+    border:3px,solid,black;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    box-shadow: 5px 5px 5px ;
+    padding: 8px;
+    height: 5vh;
+    cursor: pointer;
+}
+
+.audioplayer:hover{
+    opacity: 100;
+}
+
+.audioplayer:active{
+    opacity: 100;
+}
+
+.VolumeLabel{
+    font-weight: 900;
+    font-size: x-large;
+}
+.VolumeSlider{
+    background-color: black;
+    color: black;
+}
+.play-image{
+    width: 2vw;
+}
+.next-image{
+    width: 2vw;
+}
+.next-image:hover{
+    width: 2vw;
+}
+
+
+
+.SkipSongButton{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid;
+    margin-left: 3px;
+    margin-right: 5px;
+    border-radius: 10px;
+    font-weight: 900;
+    box-shadow: 5px 3px 2px ;
+    cursor: pointer;
+}
+
+.SkipSongButton:hover{
+    background-color: grey;
+}
+.SkipSongButton:active{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    }
+
+.PlaySongButton{
+    background-color: white;
+    border: 3px solid;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 5px 3px 2px ;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.PlaySongButton:hover{
+    background-color: grey;
+}
+.PlaySongButton:active{
+box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
