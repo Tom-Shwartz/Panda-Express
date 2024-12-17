@@ -16,3 +16,5 @@ This project is a full-stack ordering system developed by a team of four. It fea
 
 ## Team Collaboration  
 Developed by a team of four using Git for version control, ensuring clean code management and efficient collaboration throughout the project lifecycle.
+
+Link to Deployment: https://deployment-8ck2.onrender.com/ 
