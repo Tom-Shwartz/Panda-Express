@@ -22,3 +22,9 @@ Team Collaboration
 
 Developed by a team of four using Git for version control, ensuring clean code management and efficient collaboration throughout the project lifecycle.
 
+- Item 1
+- Item 2
+- Item 3
+  - Sub Item 1
+  - Sub Item 2
+
