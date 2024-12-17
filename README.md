@@ -1,4 +1,5 @@
 Project Overview
+
 This project is a full-stack ordering system developed by a team of four. It features a user-friendly frontend interface for customers, cashiers, and managers, as well as a backend database to manage employee data and inventory stock.
 
 Features
